@@ -1,0 +1,51 @@
+{
+  "name": "gulp-6to5",
+  "version": "0.0.0",
+  "description": "Turn ES6 code into vanilla ES5 with no runtime required",
+  "license": "MIT",
+  "repository": "sindresorhus/gulp-6to5",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "http://sindresorhus.com"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulpplugin",
+    "rewriting",
+    "transformation",
+    "syntax",
+    "codegen",
+    "desugaring",
+    "javascript",
+    "ecmascript",
+    "language",
+    "es5",
+    "es6",
+    "ES.next",
+    "harmony",
+    "compiler",
+    "transpiler",
+    "6to5"
+  ],
+  "dependencies": {
+    "6to5": "https://github.com/sebmck/6to5/tarball/a2f2811200ba1fb7751dd8b1cb7bd5d1f0d1c4ec",
+    "convert-source-map": "^0.4.1",
+    "gulp-util": "^3.0.0",
+    "object-assign": "^1.0.0",
+    "through2": "^0.6.1",
+    "vinyl-sourcemaps-apply": "^0.1.1"
+  },
+  "devDependencies": {
+    "gulp-sourcemaps": "^1.1.1",
+    "mocha": "*"
+  }
+}
