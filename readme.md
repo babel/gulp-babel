@@ -37,8 +37,6 @@ See the `6to5` [options](https://github.com/sebmck/6to5#options), except for `so
 
 ## Source Maps
 
-**Currently not working.**
-
 Use [gulp-sourcemaps](https://github.com/floridoo/gulp-sourcemaps) like this:
 
 ```js

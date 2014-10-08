@@ -1,10 +1,9 @@
 'use strict';
 var gutil = require('gulp-util');
 var through = require('through2');
-var to5 = require('6to5');
 var applySourceMap = require('vinyl-sourcemaps-apply');
 var objectAssign = require('object-assign');
-var convertSourceMap = require('convert-source-map');
+var to5 = require('6to5');
 
 module.exports = function (opts) {
 	opts = opts || {};
@@ -23,18 +22,16 @@ module.exports = function (opts) {
 		try {
 			var fileOpts = objectAssign({}, opts, {
 				filename: file.path,
-				//sourceMap: !!file.sourceMap
+				sourceMap: !!file.sourceMap
 			});
 
 			var res = to5.transform(file.contents.toString(), fileOpts);
 
-			// TODO: 5to6 returns empty source map
-			// if (file.sourceMap) {
-			// 	applySourceMap(file, convertSourceMap.fromSource(res).toObject());
-			//	res = convertSourceMap.removeComments(res);
-			// }
+			if (file.sourceMap && res.map) {
+				applySourceMap(file, res.map.toString());
+			}
 
-			file.contents = new Buffer(res);
+			file.contents = new Buffer(res.code);
 			this.push(file);
 		} catch (err) {
 			this.emit('error', new gutil.PluginError('gulp-6to5', err, {fileName: file.path}));

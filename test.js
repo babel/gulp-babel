@@ -8,7 +8,7 @@ it('should transpile ES6 to ES5', function (cb) {
 	var stream = to5();
 
 	stream.on('data', function (file) {
-		assert(file.contents.toString() === '503;\n');
+		assert(/503/.test(file.contents.toString()));
 		assert.equal(file.relative, 'fixture.js');
 	});
 
@@ -24,7 +24,7 @@ it('should transpile ES6 to ES5', function (cb) {
 	stream.end();
 });
 
-/*it('should generate source maps', function (cb) {
+it('should generate source maps', function (cb) {
 	var init = sourceMaps.init();
 	var write = sourceMaps.write();
 	init
@@ -32,10 +32,10 @@ it('should transpile ES6 to ES5', function (cb) {
 		.pipe(write);
 
 	write.on('data', function (file) {
-		assert.equal(file.sourceMap.mappings, 'foo');
+		assert.deepEqual(file.sourceMap.names, ['map', 'v']);
 		var contents = file.contents.toString();
 		assert(/function/.test(contents));
-		assert(/sourceMappingURL=data:application\/json;base64/.test(contents));
+		assert(/sourceMappingURL/.test(contents));
 		cb();
 	});
 
@@ -48,4 +48,4 @@ it('should transpile ES6 to ES5', function (cb) {
 	}));
 
 	init.end();
-});*/
+});
