@@ -22,18 +22,16 @@ module.exports = function (opts) {
 		try {
 			var fileOpts = objectAssign({}, opts, {
 				filename: file.path,
-				sourceMapObject: !!file.sourceMap
+				sourceMap: !!file.sourceMap
 			});
 
 			var res = to5.transform(file.contents.toString(), fileOpts);
 
-			console.log(res.map);
-
-			if (file.sourceMap && res.map) {
-				applySourceMap(file, res.map);
+			if (res.map) {
+				applySourceMap(file, res.map.toString());
 			}
 
-			file.contents = new Buffer(typeof res === 'string' ? res : res.code);
+			file.contents = new Buffer(res.code);
 			this.push(file);
 		} catch (err) {
 			this.emit('error', new gutil.PluginError('gulp-6to5', err, {fileName: file.path}));
