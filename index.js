@@ -28,7 +28,7 @@ module.exports = function (opts) {
 			var res = to5.transform(file.contents.toString(), fileOpts);
 
 			if (file.sourceMap && res.map) {
-				applySourceMap(file, res.map.toString());
+				applySourceMap(file, res.map);
 			}
 
 			file.contents = new Buffer(res.code);

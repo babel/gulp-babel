@@ -8,7 +8,7 @@ it('should transpile ES6 to ES5', function (cb) {
 	var stream = to5();
 
 	stream.on('data', function (file) {
-		assert(/503/.test(file.contents.toString()));
+		assert(/function/.test(file.contents.toString()));
 		assert.equal(file.relative, 'fixture.js');
 	});
 
@@ -18,7 +18,7 @@ it('should transpile ES6 to ES5', function (cb) {
 		cwd: __dirname,
 		base: __dirname + '/fixture',
 		path: __dirname + '/fixture/fixture.js',
-		contents: new Buffer('0o767')
+		contents: new Buffer('let foo;')
 	}));
 
 	stream.end();
@@ -32,7 +32,7 @@ it('should generate source maps', function (cb) {
 		.pipe(write);
 
 	write.on('data', function (file) {
-		assert.deepEqual(file.sourceMap.names, ['map', 'v']);
+		assert.deepEqual(file.sourceMap.sources, ['fixture.js']);
 		var contents = file.contents.toString();
 		assert(/function/.test(contents));
 		assert(/sourceMappingURL/.test(contents));
