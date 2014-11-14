@@ -37,7 +37,6 @@
     "6to5"
   ],
   "dependencies": {
-    "6to5": "^1.0.0",
     "gulp-util": "^3.0.0",
     "object-assign": "^1.0.0",
     "through2": "^0.6.1",
@@ -46,5 +45,8 @@
   "devDependencies": {
     "gulp-sourcemaps": "^1.1.1",
     "mocha": "*"
+  },
+  "peerDependencies": {
+    "6to5": "^1"
   }
 }
