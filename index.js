@@ -22,6 +22,7 @@ module.exports = function (opts) {
 		try {
 			var fileOpts = objectAssign({}, opts, {
 				filename: file.path,
+				filenameRelative: file.relative,
 				sourceMap: !!file.sourceMap
 			});
 
