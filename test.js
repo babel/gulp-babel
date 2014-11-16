@@ -8,7 +8,7 @@ it('should transpile ES6 to ES5', function (cb) {
 	var stream = to5();
 
 	stream.on('data', function (file) {
-		assert(/function/.test(file.contents.toString()));
+		assert(/var foo/.test(file.contents.toString()), file.contents.toString());
 		assert.equal(file.relative, 'fixture.js');
 	});
 
