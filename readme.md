@@ -50,7 +50,7 @@ gulp.task('default', function () {
 		.pipe(sourcemaps.init())
 		.pipe(to5())
 		.pipe(concat('all.js'))
-		.pipe(sourcemaps.write())
+		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('dist'));
 });
 ```
