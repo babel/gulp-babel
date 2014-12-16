@@ -1,4 +1,4 @@
-# gulp-6to5 [![Build Status](https://travis-ci.org/sindresorhus/gulp-6to5.svg?branch=master)](https://travis-ci.org/sindresorhus/gulp-6to5)
+# gulp-6to5 [![Build Status](https://travis-ci.org/6to5/gulp-6to5.svg?branch=master)](https://travis-ci.org/6to5/gulp-6to5)
 
 > Turn ES6 code into vanilla ES5 with no runtime required using [6to5](https://github.com/sebmck/6to5)
 
