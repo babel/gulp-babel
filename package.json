@@ -1,6 +1,6 @@
 {
   "name": "gulp-6to5",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Turn ES6 code into vanilla ES5 with no runtime required",
   "license": "MIT",
   "repository": "6to5/gulp-6to5",
@@ -37,7 +37,7 @@
     "6to5"
   ],
   "dependencies": {
-    "6to5": "^1.0.0",
+    "6to5": "^2.0.0",
     "gulp-util": "^3.0.0",
     "object-assign": "^2.0.0",
     "through2": "^0.6.1",
