@@ -3,7 +3,7 @@ var gutil = require('gulp-util');
 var through = require('through2');
 var applySourceMap = require('vinyl-sourcemaps-apply');
 var objectAssign = require('object-assign');
-var to5 = require('6to5');
+var to5 = require('6to5-core');
 
 module.exports = function (opts) {
 	opts = opts || {};
