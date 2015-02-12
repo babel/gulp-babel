@@ -28,7 +28,7 @@ gulp.task('default', function () {
 
 ## API
 
-### 6to5(options)
+### to5(options)
 
 #### options
 
