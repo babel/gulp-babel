@@ -32,7 +32,7 @@ gulp.task('default', function () {
 
 #### options
 
-See the `6to5` [options](https://6to5.org/usage.html#options), except for `sourceMap` and `filename` which is handled for you.
+See the `6to5` [options](https://6to5.org/docs/usage/options/#options), except for `sourceMap` and `filename` which is handled for you.
 
 
 ## Source Maps
