@@ -32,7 +32,7 @@ gulp.task('default', function () {
 
 #### options
 
-See the `babel` [options](https://babel.org/docs/usage/options), except for `sourceMap` and `filename` which is handled for you.
+See the `babel` [options](https://babeljs.io/docs/usage/options/), except for `sourceMap` and `filename` which is handled for you.
 
 
 ## Source Maps
