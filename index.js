@@ -3,7 +3,7 @@ var gutil = require('gulp-util');
 var through = require('through2');
 var applySourceMap = require('vinyl-sourcemaps-apply');
 var objectAssign = require('object-assign');
-var to5 = require('6to5-core');
+var babel = require('babel-core');
 
 module.exports = function (opts) {
 	opts = opts || {};
@@ -15,7 +15,7 @@ module.exports = function (opts) {
 		}
 
 		if (file.isStream()) {
-			cb(new gutil.PluginError('gulp-6to5', 'Streaming not supported'));
+			cb(new gutil.PluginError('gulp-babel', 'Streaming not supported'));
 			return;
 		}
 
@@ -26,7 +26,7 @@ module.exports = function (opts) {
 				sourceMap: !!file.sourceMap
 			});
 
-			var res = to5.transform(file.contents.toString(), fileOpts);
+			var res = babel.transform(file.contents.toString(), fileOpts);
 
 			if (file.sourceMap && res.map) {
 				applySourceMap(file, res.map);
@@ -35,7 +35,7 @@ module.exports = function (opts) {
 			file.contents = new Buffer(res.code);
 			this.push(file);
 		} catch (err) {
-			this.emit('error', new gutil.PluginError('gulp-6to5', err, {fileName: file.path}));
+			this.emit('error', new gutil.PluginError('gulp-babel', err, {fileName: file.path}));
 		}
 
 		cb();
