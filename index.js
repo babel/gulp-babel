@@ -35,7 +35,7 @@ module.exports = function (opts) {
 			file.contents = new Buffer(res.code);
 			this.push(file);
 		} catch (err) {
-			this.emit('error', new gutil.PluginError('gulp-babel', err, {fileName: file.path}));
+			this.emit('error', new gutil.PluginError('gulp-babel', err, {fileName: file.path, showProperties: false}));
 		}
 
 		cb();
