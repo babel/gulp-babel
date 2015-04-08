@@ -1,6 +1,6 @@
 {
   "name": "gulp-babel",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "Turn ES6 code into vanilla ES5 with no runtime required",
   "license": "MIT",
   "repository": "babel/gulp-babel",
