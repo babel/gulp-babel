@@ -3,6 +3,7 @@ var gutil = require('gulp-util');
 var through = require('through2');
 var applySourceMap = require('vinyl-sourcemaps-apply');
 var objectAssign = require('object-assign');
+var replaceExt = require('replace-ext');
 var babel = require('babel-core');
 
 module.exports = function (opts) {
@@ -33,6 +34,7 @@ module.exports = function (opts) {
 			}
 
 			file.contents = new Buffer(res.code);
+			file.path = replaceExt(file.path, '.js');
 			this.push(file);
 		} catch (err) {
 			this.emit('error', new gutil.PluginError('gulp-babel', err, {fileName: file.path, showProperties: false}));

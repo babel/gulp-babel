@@ -17,7 +17,7 @@ it('should transpile ES6 to ES5', function (cb) {
 	stream.write(new gutil.File({
 		cwd: __dirname,
 		base: __dirname + '/fixture',
-		path: __dirname + '/fixture/fixture.js',
+		path: __dirname + '/fixture/fixture.es6',
 		contents: new Buffer('let foo;')
 	}));
 
