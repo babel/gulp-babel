@@ -49,3 +49,22 @@ it('should generate source maps', function (cb) {
 
 	init.end();
 });
+
+it('should list used helpers in file.babel', function (cb) {
+	var stream = to5();
+
+	stream.on('data', function (file) {
+		assert.deepEqual(file.babel.usedHelpers, ['class-call-check']);
+	});
+
+	stream.on('end', cb);
+
+	stream.write(new gutil.File({
+		cwd: __dirname,
+		base: __dirname + '/fixture',
+		path: __dirname + '/fixture/fixture.es6',
+		contents: new Buffer('class MyClass {};')
+	}));
+
+	stream.end();
+});
