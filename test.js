@@ -1,11 +1,12 @@
 'use strict';
+var path = require('path');
 var assert = require('assert');
 var gutil = require('gulp-util');
 var sourceMaps = require('gulp-sourcemaps');
-var to5 = require('./');
+var babel = require('./');
 
-it('should transpile ES6 to ES5', function (cb) {
-	var stream = to5();
+it('should transpile with Babel', function (cb) {
+	var stream = babel();
 
 	stream.on('data', function (file) {
 		assert(/var foo/.test(file.contents.toString()), file.contents.toString());
@@ -16,8 +17,8 @@ it('should transpile ES6 to ES5', function (cb) {
 
 	stream.write(new gutil.File({
 		cwd: __dirname,
-		base: __dirname + '/fixture',
-		path: __dirname + '/fixture/fixture.es6',
+		base: path.join(__dirname, 'fixture'),
+		path: path.join(__dirname, 'fixture/fixture.jsx'),
 		contents: new Buffer('let foo;')
 	}));
 
@@ -28,7 +29,7 @@ it('should generate source maps', function (cb) {
 	var init = sourceMaps.init();
 	var write = sourceMaps.write();
 	init
-		.pipe(to5())
+		.pipe(babel())
 		.pipe(write);
 
 	write.on('data', function (file) {
@@ -41,8 +42,8 @@ it('should generate source maps', function (cb) {
 
 	init.write(new gutil.File({
 		cwd: __dirname,
-		base: __dirname + '/fixture',
-		path: __dirname + '/fixture/fixture.js',
+		base: path.join(__dirname, 'fixture'),
+		path: path.join(__dirname, 'fixture/fixture.js'),
 		contents: new Buffer('[].map(v => v + 1)'),
 		sourceMap: ''
 	}));
@@ -51,7 +52,7 @@ it('should generate source maps', function (cb) {
 });
 
 it('should list used helpers in file.babel', function (cb) {
-	var stream = to5();
+	var stream = babel();
 
 	stream.on('data', function (file) {
 		assert.deepEqual(file.babel.usedHelpers, ['class-call-check']);
@@ -61,8 +62,8 @@ it('should list used helpers in file.babel', function (cb) {
 
 	stream.write(new gutil.File({
 		cwd: __dirname,
-		base: __dirname + '/fixture',
-		path: __dirname + '/fixture/fixture.es6',
+		base: path.join(__dirname, 'fixture'),
+		path: path.join(__dirname, 'fixture/fixture.js'),
 		contents: new Buffer('class MyClass {};')
 	}));
 

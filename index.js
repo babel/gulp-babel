@@ -38,7 +38,10 @@ module.exports = function (opts) {
 			file.babel = res.metadata;
 			this.push(file);
 		} catch (err) {
-			this.emit('error', new gutil.PluginError('gulp-babel', err, {fileName: file.path, showProperties: false}));
+			this.emit('error', new gutil.PluginError('gulp-babel', err, {
+				fileName: file.path,
+				showProperties: false
+			}));
 		}
 
 		cb();
