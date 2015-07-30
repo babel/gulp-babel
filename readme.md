@@ -7,7 +7,7 @@
 
 ## Install
 
-```sh
+```
 $ npm install --save-dev gulp-babel
 ```
 
@@ -55,21 +55,23 @@ gulp.task('default', function () {
 });
 ```
 
+
 ## Babel Metadata
 
-The files that are emitted from this are annotated with a `babel` property, which
-contains the metadata from the `babel.transform()` call. The metadata properties are listed
-[here](http://babeljs.io/docs/advanced/external-helpers/#selective-builds).
+Files in the stream are annotated with a `babel` property, which
+contains the [metadata](http://babeljs.io/docs/advanced/external-helpers/#selective-builds) from `babel.transform()`.
 
-example:
+#### Example
+
 ```js
 var gulp = require('gulp');
 var babel = require('gulp-babel');
 var through = require('through2');
 
-function logFileHelpers () {
-	return through.obj(function (file, enc, done) {
+function logFileHelpers() {
+	return through.obj(function (file, enc, cb) {
 		console.log(file.babel.usedHelpers);
+		cb(null, file);
 	});
 }
 
@@ -79,6 +81,7 @@ gulp.task('default', function () {
 		.pipe(logFileHelpers);
 })
 ```
+
 
 ## License
 
