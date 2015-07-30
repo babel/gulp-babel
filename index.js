@@ -35,6 +35,7 @@ module.exports = function (opts) {
 
 			file.contents = new Buffer(res.code);
 			file.path = replaceExt(file.path, '.js');
+			file.babel = res.metadata;
 			this.push(file);
 		} catch (err) {
 			this.emit('error', new gutil.PluginError('gulp-babel', err, {fileName: file.path, showProperties: false}));

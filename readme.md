@@ -55,6 +55,30 @@ gulp.task('default', function () {
 });
 ```
 
+## Babel Metadata
+
+The files that are emitted from this are annotated with a `babel` property, which
+contains the metadata from the `babel.transform()` call. The metadata properties are listed
+[here](http://babeljs.io/docs/advanced/external-helpers/#selective-builds).
+
+example:
+```js
+var gulp = require('gulp');
+var babel = require('gulp-babel');
+var through = require('through2');
+
+function logFileHelpers () {
+	return through.obj(function (file, enc, done) {
+		console.log(file.babel.usedHelpers);
+	});
+}
+
+gulp.task('default', function () {
+	return gulp.src('src/**/*.js')
+		.pipe(babel())
+		.pipe(logFileHelpers);
+})
+```
 
 ## License
 
