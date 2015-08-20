@@ -33,7 +33,8 @@ it('should generate source maps', function (cb) {
 		.pipe(write);
 
 	write.on('data', function (file) {
-		assert.deepEqual(file.sourceMap.sources, ['fixture.js']);
+		assert.deepEqual(file.sourceMap.sources, ['fixture.es6']);
+		assert.strictEqual(file.sourceMap.file, 'fixture.js');
 		var contents = file.contents.toString();
 		assert(/function/.test(contents));
 		assert(/sourceMappingURL/.test(contents));
@@ -43,7 +44,7 @@ it('should generate source maps', function (cb) {
 	init.write(new gutil.File({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
-		path: path.join(__dirname, 'fixture/fixture.js'),
+		path: path.join(__dirname, 'fixture/fixture.es6'),
 		contents: new Buffer('[].map(v => v + 1)'),
 		sourceMap: ''
 	}));
