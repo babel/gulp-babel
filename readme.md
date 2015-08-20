@@ -28,7 +28,7 @@ gulp.task('default', function () {
 
 ## API
 
-### babel(options)
+### babel([options])
 
 #### options
 

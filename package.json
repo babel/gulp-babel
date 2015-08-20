@@ -13,7 +13,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "xo && mocha"
   },
   "files": [
     "index.js"
@@ -46,6 +46,13 @@
   },
   "devDependencies": {
     "gulp-sourcemaps": "^1.1.1",
-    "mocha": "*"
+    "mocha": "*",
+    "xo": "*"
+  },
+  "xo": {
+    "envs": [
+      "node",
+      "mocha"
+    ]
   }
 }
