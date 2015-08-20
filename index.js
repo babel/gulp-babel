@@ -24,7 +24,7 @@ module.exports = function (opts) {
 			var fileOpts = objectAssign({}, opts, {
 				filename: file.path,
 				filenameRelative: file.relative,
-				sourceMap: !!file.sourceMap
+				sourceMap: Boolean(file.sourceMap)
 			});
 
 			var res = babel.transform(file.contents.toString(), fileOpts);
@@ -36,6 +36,7 @@ module.exports = function (opts) {
 			file.contents = new Buffer(res.code);
 			file.path = replaceExt(file.path, '.js');
 			file.babel = res.metadata;
+
 			this.push(file);
 		} catch (err) {
 			this.emit('error', new gutil.PluginError('gulp-babel', err, {
