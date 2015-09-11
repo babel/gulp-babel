@@ -82,6 +82,20 @@ gulp.task('default', function () {
 })
 ```
 
+## Runtime
+
+If you are attempting to use features such as generators, you will need to pass `{ optional: ['runtime'] }` to include the babel runtime. Otherwise you will receive the error: `regeneratorRuntime is not defined`.
+
+```js
+var gulp = require('gulp');
+var babel = require('gulp-babel');
+
+gulp.task('default', function () {
+	return gulp.src('src/app.js')
+		.pipe(babel({ optional: ['runtime'] }))
+		.pipe(gulp.dest('dist'));
+});
+```
 
 ## License
 
