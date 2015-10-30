@@ -37,7 +37,7 @@
     "6to5"
   ],
   "dependencies": {
-    "babel-core": "^5.8.19",
+    "babel-core": "^6.0.2",
     "gulp-util": "^3.0.0",
     "object-assign": "^4.0.1",
     "replace-ext": "0.0.1",
@@ -45,6 +45,9 @@
     "vinyl-sourcemaps-apply": "^0.2.0"
   },
   "devDependencies": {
+    "babel-plugin-transform-es2015-arrow-functions": "^6.0.2",
+    "babel-plugin-transform-es2015-block-scoping": "^6.0.9",
+    "babel-plugin-transform-es2015-classes": "^6.0.8",
     "gulp-sourcemaps": "^1.1.1",
     "mocha": "*",
     "xo": "*"
