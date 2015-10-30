@@ -79,7 +79,9 @@ function logFileHelpers() {
 
 gulp.task('default', function () {
 	return gulp.src('src/**/*.js')
-		.pipe(babel())
+		.pipe(babel({
+			presets: ['babel-preset-es2015']
+		}))
 		.pipe(logFileHelpers);
 })
 ```
