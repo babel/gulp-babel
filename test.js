@@ -6,7 +6,9 @@ var sourceMaps = require('gulp-sourcemaps');
 var babel = require('./');
 
 it('should transpile with Babel', function (cb) {
-	var stream = babel();
+	var stream = babel({
+		plugins: ['transform-es2015-block-scoping']
+	});
 
 	stream.on('data', function (file) {
 		assert(/var foo/.test(file.contents.toString()), file.contents.toString());
@@ -29,7 +31,9 @@ it('should generate source maps', function (cb) {
 	var init = sourceMaps.init();
 	var write = sourceMaps.write();
 	init
-		.pipe(babel())
+		.pipe(babel({
+			plugins: ['transform-es2015-arrow-functions']
+		}))
 		.pipe(write);
 
 	write.on('data', function (file) {
@@ -53,10 +57,12 @@ it('should generate source maps', function (cb) {
 });
 
 it('should list used helpers in file.babel', function (cb) {
-	var stream = babel();
+	var stream = babel({
+		plugins: ['transform-es2015-classes']
+	});
 
 	stream.on('data', function (file) {
-		assert.deepEqual(file.babel.usedHelpers, ['class-call-check']);
+		assert.deepEqual(file.babel.usedHelpers, ['classCallCheck']);
 	});
 
 	stream.on('end', cb);

@@ -8,7 +8,7 @@
 ## Install
 
 ```
-$ npm install --save-dev gulp-babel
+$ npm install --save-dev gulp-babel babel-preset-es2015
 ```
 
 
@@ -20,7 +20,9 @@ var babel = require('gulp-babel');
 
 gulp.task('default', function () {
 	return gulp.src('src/app.js')
-		.pipe(babel())
+		.pipe(babel({
+			presets: ['babel-preset-es2015']
+		}))
 		.pipe(gulp.dest('dist'));
 });
 ```
@@ -59,7 +61,7 @@ gulp.task('default', function () {
 ## Babel Metadata
 
 Files in the stream are annotated with a `babel` property, which
-contains the [metadata](http://babeljs.io/docs/advanced/external-helpers/#selective-builds) from `babel.transform()`.
+contains the metadata from `babel.transform()`.
 
 #### Example
 
@@ -77,22 +79,30 @@ function logFileHelpers() {
 
 gulp.task('default', function () {
 	return gulp.src('src/**/*.js')
-		.pipe(babel())
+		.pipe(babel({
+			presets: ['babel-preset-es2015']
+		}))
 		.pipe(logFileHelpers);
 })
 ```
 
 ## Runtime
 
-If you are attempting to use features such as generators, you will need to pass `{ optional: ['runtime'] }` to include the babel runtime. Otherwise you will receive the error: `regeneratorRuntime is not defined`.
+If you are attempting to use features such as generators, you will need to add `transform-runtime` as plugin to include the babel runtime. Otherwise you will receive the error: `regeneratorRuntime is not defined`.
 
+Install the runtime:
+```
+npm install --save-dev babel-plugin-transform-runtime
+```
+
+Use it as plugin:
 ```js
 var gulp = require('gulp');
 var babel = require('gulp-babel');
 
 gulp.task('default', function () {
 	return gulp.src('src/app.js')
-		.pipe(babel({ optional: ['runtime'] }))
+		.pipe(babel({ plugins: ['transform-runtime'] }))
 		.pipe(gulp.dest('dist'));
 });
 ```
