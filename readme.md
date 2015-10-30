@@ -1,8 +1,8 @@
 # gulp-babel [![Build Status](https://travis-ci.org/babel/gulp-babel.svg?branch=master)](https://travis-ci.org/babel/gulp-babel)
 
-> Turn ES6 code into vanilla ES5 with no runtime required using [babel](https://github.com/babel/babel)
+> Use next generation JavaScript, today, with [Babel](https://babeljs.io)
 
-*Issues with the output should be reported on the babel [issue tracker](https://github.com/babel/babel/issues).*
+*Issues with the output should be reported on the Babel [issue tracker](https://github.com/babel/babel/issues).*
 
 
 ## Install
@@ -15,10 +15,10 @@ $ npm install --save-dev gulp-babel babel-preset-es2015
 ## Usage
 
 ```js
-var gulp = require('gulp');
-var babel = require('gulp-babel');
+const gulp = require('gulp');
+const babel = require('gulp-babel');
 
-gulp.task('default', function () {
+gulp.task('default', () => {
 	return gulp.src('src/app.js')
 		.pipe(babel({
 			presets: ['babel-preset-es2015']
@@ -34,7 +34,7 @@ gulp.task('default', function () {
 
 #### options
 
-See the `babel` [options](https://babeljs.io/docs/usage/options/), except for `sourceMap` and `filename` which is handled for you.
+See the Babel [options](https://babeljs.io/docs/usage/options/), except for `sourceMap` and `filename` which is handled for you.
 
 
 ## Source Maps
@@ -42,15 +42,17 @@ See the `babel` [options](https://babeljs.io/docs/usage/options/), except for `s
 Use [gulp-sourcemaps](https://github.com/floridoo/gulp-sourcemaps) like this:
 
 ```js
-var gulp = require('gulp');
-var sourcemaps = require('gulp-sourcemaps');
-var babel = require('gulp-babel');
-var concat = require('gulp-concat');
+const gulp = require('gulp');
+const sourcemaps = require('gulp-sourcemaps');
+const babel = require('gulp-babel');
+const concat = require('gulp-concat');
 
-gulp.task('default', function () {
+gulp.task('default', () => {
 	return gulp.src('src/**/*.js')
 		.pipe(sourcemaps.init())
-		.pipe(babel())
+		.pipe(babel({
+			presets: ['babel-preset-es2015']
+		}))
 		.pipe(concat('all.js'))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('dist'));
@@ -60,24 +62,23 @@ gulp.task('default', function () {
 
 ## Babel Metadata
 
-Files in the stream are annotated with a `babel` property, which
-contains the metadata from `babel.transform()`.
+Files in the stream are annotated with a `babel` property, which contains the metadata from [`babel.transform()`](https://babeljs.io/docs/usage/api/).
 
 #### Example
 
 ```js
-var gulp = require('gulp');
-var babel = require('gulp-babel');
-var through = require('through2');
+const gulp = require('gulp');
+const babel = require('gulp-babel');
+const through = require('through2');
 
 function logFileHelpers() {
-	return through.obj(function (file, enc, cb) {
+	return through.obj((file, enc, cb) => {
 		console.log(file.babel.usedHelpers);
 		cb(null, file);
 	});
 }
 
-gulp.task('default', function () {
+gulp.task('default', () => {
 	return gulp.src('src/**/*.js')
 		.pipe(babel({
 			presets: ['babel-preset-es2015']
@@ -86,26 +87,32 @@ gulp.task('default', function () {
 })
 ```
 
+
 ## Runtime
 
-If you are attempting to use features such as generators, you will need to add `transform-runtime` as plugin to include the babel runtime. Otherwise you will receive the error: `regeneratorRuntime is not defined`.
+If you're attempting to use features such as generators, you'll need to add `transform-runtime` as a plugin, to include the Babel runtime. Otherwise, you'll receive the error: `regeneratorRuntime is not defined`.
 
 Install the runtime:
+
 ```
-npm install --save-dev babel-plugin-transform-runtime
+$ npm install --save-dev babel-plugin-transform-runtime
 ```
 
 Use it as plugin:
-```js
-var gulp = require('gulp');
-var babel = require('gulp-babel');
 
-gulp.task('default', function () {
+```js
+const gulp = require('gulp');
+const babel = require('gulp-babel');
+
+gulp.task('default', () => {
 	return gulp.src('src/app.js')
-		.pipe(babel({ plugins: ['transform-runtime'] }))
+		.pipe(babel({
+			plugins: ['transform-runtime']
+		}))
 		.pipe(gulp.dest('dist'));
 });
 ```
+
 
 ## License
 
