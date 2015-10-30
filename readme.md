@@ -21,7 +21,7 @@ const babel = require('gulp-babel');
 gulp.task('default', () => {
 	return gulp.src('src/app.js')
 		.pipe(babel({
-			presets: ['babel-preset-es2015']
+			presets: ['es2015']
 		}))
 		.pipe(gulp.dest('dist'));
 });
@@ -51,7 +51,7 @@ gulp.task('default', () => {
 	return gulp.src('src/**/*.js')
 		.pipe(sourcemaps.init())
 		.pipe(babel({
-			presets: ['babel-preset-es2015']
+			presets: ['es2015']
 		}))
 		.pipe(concat('all.js'))
 		.pipe(sourcemaps.write('.'))
@@ -81,7 +81,7 @@ function logFileHelpers() {
 gulp.task('default', () => {
 	return gulp.src('src/**/*.js')
 		.pipe(babel({
-			presets: ['babel-preset-es2015']
+			presets: ['es2015']
 		}))
 		.pipe(logFileHelpers);
 })
