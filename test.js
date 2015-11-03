@@ -76,3 +76,24 @@ it('should list used helpers in file.babel', function (cb) {
 
 	stream.end();
 });
+
+it('should not rename ignored files', function (cb) {
+	var stream = babel({
+		ignore: /fixture/
+	});
+
+	var inputFile = {
+		cwd: __dirname
+	};
+	inputFile.base = path.join(inputFile.cwd, 'fixture');
+	inputFile.basename = 'fixture.jsx';
+	inputFile.path = path.join(inputFile.base, inputFile.basename);
+	inputFile.contents = new Buffer(';');
+
+	stream
+		.on('data', function (file) {
+			assert.equal(file.relative, inputFile.basename);
+		})
+		.on('end', cb)
+		.end(new gutil.File(inputFile));
+});
