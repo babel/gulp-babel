@@ -34,8 +34,11 @@ module.exports = function (opts) {
 				applySourceMap(file, res.map);
 			}
 
-			file.contents = new Buffer(res.code);
-			file.path = replaceExt(file.path, '.js');
+			if (!res.ignored) {
+				file.contents = new Buffer(res.code);
+				file.path = replaceExt(file.path, '.js');
+			}
+
 			file.babel = res.metadata;
 
 			this.push(file);
