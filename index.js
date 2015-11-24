@@ -31,6 +31,7 @@ module.exports = function (opts) {
 
 			if (file.sourceMap && res.map) {
 				res.map.file = replaceExt(res.map.file, '.js');
+				res.map.sources = file.sourceMap.sources;
 				applySourceMap(file, res.map);
 			}
 
