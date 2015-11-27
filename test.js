@@ -56,6 +56,35 @@ it('should generate source maps', function (cb) {
 	init.end();
 });
 
+it('should generate source maps for file in nested folder', function (cb) {
+	var init = sourceMaps.init();
+	var write = sourceMaps.write();
+	init
+		.pipe(babel({
+			plugins: ['transform-es2015-arrow-functions']
+		}))
+		.pipe(write);
+
+	write.on('data', function (file) {
+		assert.deepEqual(file.sourceMap.sources, ['nested/fixture.es6']);
+		assert.strictEqual(file.sourceMap.file, 'nested/fixture.js');
+		var contents = file.contents.toString();
+		assert(/function/.test(contents));
+		assert(/sourceMappingURL/.test(contents));
+		cb();
+	});
+
+	init.write(new gutil.File({
+		cwd: __dirname,
+		base: path.join(__dirname, 'fixture'),
+		path: path.join(__dirname, 'fixture/nested/fixture.es6'),
+		contents: new Buffer('[].map(v => v + 1)'),
+		sourceMap: ''
+	}));
+
+	init.end();
+});
+
 it('should list used helpers in file.babel', function (cb) {
 	var stream = babel({
 		plugins: ['transform-es2015-classes']

@@ -24,7 +24,9 @@ module.exports = function (opts) {
 			var fileOpts = objectAssign({}, opts, {
 				filename: file.path,
 				filenameRelative: file.relative,
-				sourceMap: Boolean(file.sourceMap)
+				sourceMap: Boolean(file.sourceMap),
+				sourceFileName: file.relative,
+				sourceMapTarget: file.relative
 			});
 
 			var res = babel.transform(file.contents.toString(), fileOpts);
