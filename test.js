@@ -56,6 +56,35 @@ it('should generate source maps', function (cb) {
 	init.end();
 });
 
+it('should generate source maps for flow files', function (cb) {
+	var init = sourceMaps.init();
+	var write = sourceMaps.write();
+	init
+		.pipe(babel({
+			plugins: ['transform-es2015-arrow-functions']
+		}))
+		.pipe(write);
+
+	write.on('data', function (file) {
+		assert.deepEqual(file.sourceMap.sources, ['fixture.js.flow']);
+		assert.strictEqual(file.sourceMap.file, 'fixture.js');
+		var contents = file.contents.toString();
+		assert(/function/.test(contents));
+		assert(/sourceMappingURL/.test(contents));
+		cb();
+	});
+
+	init.write(new gutil.File({
+		cwd: __dirname,
+		base: path.join(__dirname, 'fixture'),
+		path: path.join(__dirname, 'fixture/fixture.js.flow'),
+		contents: new Buffer('[].map(v => v + 1)'),
+		sourceMap: ''
+	}));
+
+	init.end();
+});
+
 it('should generate source maps for file in nested folder', function (cb) {
 	var init = sourceMaps.init();
 	var write = sourceMaps.write();

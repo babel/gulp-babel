@@ -5,6 +5,7 @@ var applySourceMap = require('vinyl-sourcemaps-apply');
 var objectAssign = require('object-assign');
 var replaceExt = require('replace-ext');
 var babel = require('babel-core');
+var path = require('path');
 
 module.exports = function (opts) {
 	opts = opts || {};
@@ -32,13 +33,19 @@ module.exports = function (opts) {
 			var res = babel.transform(file.contents.toString(), fileOpts);
 
 			if (file.sourceMap && res.map) {
-				res.map.file = replaceExt(res.map.file, '.js');
+				res.map.file = replaceExt(res.map.file, '');
+				if (path.extname(res.map.file) !== '.js') {
+					res.map.file = replaceExt(res.map.file, '.js');
+				}
 				applySourceMap(file, res.map);
 			}
 
 			if (!res.ignored) {
 				file.contents = new Buffer(res.code);
-				file.path = replaceExt(file.path, '.js');
+				file.path = replaceExt(file.path, '');
+				if (path.extname(file.path) !== '.js') {
+					file.path = replaceExt(file.path, '.js');
+				}
 			}
 
 			file.babel = res.metadata;
