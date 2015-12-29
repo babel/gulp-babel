@@ -34,13 +34,17 @@ module.exports = function (opts) {
 			var res = babel.transform(file.contents.toString(), fileOpts);
 
 			if (file.sourceMap && res.map) {
-				if (!skipRename) res.map.file = replaceExt(res.map.file, '.js');
+				if (!skipRename) {
+					res.map.file = replaceExt(res.map.file, '.js');
+				}
 				applySourceMap(file, res.map);
 			}
 
 			if (!res.ignored) {
 				file.contents = new Buffer(res.code);
-				if (!skipRename) file.path = replaceExt(file.path, '.js');
+				if (!skipRename) {
+					file.path = replaceExt(file.path, '.js');
+				}
 			}
 
 			file.babel = res.metadata;
