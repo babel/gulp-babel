@@ -83,7 +83,7 @@ gulp.task('default', () => {
 		.pipe(babel({
 			presets: ['es2015']
 		}))
-		.pipe(logFileHelpers);
+		.pipe(logFileHelpers());
 })
 ```
 
