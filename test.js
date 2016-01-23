@@ -127,3 +127,23 @@ it('should not rename ignored files', function (cb) {
 		.on('end', cb)
 		.end(new gutil.File(inputFile));
 });
+
+it('should not rename files without an extension', function (cb) {
+	var stream = babel();
+
+	var inputFile = {
+		cwd: __dirname
+	};
+
+	inputFile.base = path.join(inputFile.cwd, 'bin');
+	inputFile.basename = 'app';
+	inputFile.path = path.join(inputFile.base, inputFile.basename);
+	inputFile.contents = new Buffer(';');
+
+	stream
+		.on('data', function (file) {
+			assert.equal(file.relative, inputFile.basename);
+		})
+		.on('end', cb)
+		.end(new gutil.File(inputFile));
+});
