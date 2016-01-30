@@ -7,12 +7,8 @@ var objectAssign = require('object-assign');
 var replaceExt = require('replace-ext');
 var babel = require('babel-core');
 
-function replaceExtension(filepath) {
-	if (path.extname(filepath)) {
-		return replaceExt(filepath, '.js');
-	}
-
-	return filepath;
+function replaceExtension(fp) {
+	return path.extname(fp) ? replaceExt(fp, '.js') : fp;
 }
 
 module.exports = function (opts) {
