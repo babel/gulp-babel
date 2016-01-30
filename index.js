@@ -1,10 +1,19 @@
 'use strict';
+var path = require('path');
 var gutil = require('gulp-util');
 var through = require('through2');
 var applySourceMap = require('vinyl-sourcemaps-apply');
 var objectAssign = require('object-assign');
 var replaceExt = require('replace-ext');
 var babel = require('babel-core');
+
+function replaceExtension(filepath) {
+	if (path.extname(filepath)) {
+		return replaceExt(filepath, '.js');
+	}
+
+	return filepath;
+}
 
 module.exports = function (opts) {
 	opts = opts || {};
@@ -32,13 +41,13 @@ module.exports = function (opts) {
 			var res = babel.transform(file.contents.toString(), fileOpts);
 
 			if (file.sourceMap && res.map) {
-				res.map.file = replaceExt(res.map.file, '.js');
+				res.map.file = replaceExtension(res.map.file);
 				applySourceMap(file, res.map);
 			}
 
 			if (!res.ignored) {
 				file.contents = new Buffer(res.code);
-				file.path = replaceExt(file.path, '.js');
+				file.path = replaceExtension(file.path);
 			}
 
 			file.babel = res.metadata;
