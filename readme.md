@@ -30,9 +30,9 @@ gulp.task('default', () => {
 
 ## API
 
-### babel([gulpOptions], [options])
+### babel([babelOptions], [options])
 
-#### gulpOptions
+#### babelOptions
 
 See the Babel [options](https://babeljs.io/docs/usage/options/), except for `sourceMap` and `filename` which is handled for you.
 

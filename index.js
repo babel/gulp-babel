@@ -11,8 +11,8 @@ function replaceExtension(fp) {
 	return path.extname(fp) ? replaceExt(fp, '.js') : fp;
 }
 
-module.exports = function (gulpOptions, options) {
-	gulpOptions = gulpOptions || {};
+module.exports = function (babelOptions, options) {
+	babelOptions = babelOptions || {};
 	options = options || {};
 
 	return through.obj(function (file, enc, cb) {
@@ -27,7 +27,7 @@ module.exports = function (gulpOptions, options) {
 		}
 
 		try {
-			var fileOptions = objectAssign({}, gulpOptions, {
+			var fileOptions = objectAssign({}, babelOptions, {
 				filename: file.path,
 				filenameRelative: file.relative,
 				sourceMap: Boolean(file.sourceMap),
