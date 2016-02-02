@@ -11,8 +11,9 @@ function replaceExtension(fp) {
 	return path.extname(fp) ? replaceExt(fp, '.js') : fp;
 }
 
-module.exports = function (opts) {
-	opts = opts || {};
+module.exports = function (gulpOptions, options) {
+	gulpOptions = gulpOptions || {};
+	options = options || {};
 
 	return through.obj(function (file, enc, cb) {
 		if (file.isNull()) {
@@ -26,7 +27,7 @@ module.exports = function (opts) {
 		}
 
 		try {
-			var fileOpts = objectAssign({}, opts, {
+			var fileOptions = objectAssign({}, gulpOptions, {
 				filename: file.path,
 				filenameRelative: file.relative,
 				sourceMap: Boolean(file.sourceMap),
@@ -34,7 +35,7 @@ module.exports = function (opts) {
 				sourceMapTarget: file.relative
 			});
 
-			var res = babel.transform(file.contents.toString(), fileOpts);
+			var res = babel.transform(file.contents.toString(), fileOptions);
 
 			if (file.sourceMap && res.map) {
 				res.map.file = replaceExtension(res.map.file);
@@ -43,7 +44,10 @@ module.exports = function (opts) {
 
 			if (!res.ignored) {
 				file.contents = new Buffer(res.code);
-				file.path = replaceExtension(file.path);
+
+				if (!options.preserveExtensions) {
+					file.path = replaceExtension(file.path);
+				}
 			}
 
 			file.babel = res.metadata;

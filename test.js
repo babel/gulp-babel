@@ -147,3 +147,23 @@ it('should not rename files without an extension', function (cb) {
 		.on('end', cb)
 		.end(new gutil.File(inputFile));
 });
+
+it('should preserve extensions if configured to do so', function (cb) {
+	var stream = babel(null, {preserveExtensions: true});
+
+	var inputFile = {
+		cwd: __dirname
+	};
+
+	inputFile.base = path.join(inputFile.cwd, 'fixture');
+	inputFile.basename = 'fixture.mocha';
+	inputFile.path = path.join(inputFile.base, inputFile.basename);
+	inputFile.contents = new Buffer(';');
+
+	stream
+		.on('data', function (file) {
+			assert.equal(file.relative, inputFile.basename);
+		})
+		.on('end', cb)
+		.end(new gutil.File(inputFile));
+});
