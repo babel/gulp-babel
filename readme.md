@@ -2,7 +2,7 @@
 
 > Use next generation JavaScript, today, with [Babel](https://babeljs.io)
 
-*Issues with the output should be reported on the Babel [issue tracker](https://github.com/babel/babel/issues).*
+*Issues with the output should be reported on the Babel [issue tracker](https://phabricator.babeljs.io/).*
 
 
 ## Install
