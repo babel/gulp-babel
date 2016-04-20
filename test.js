@@ -37,7 +37,7 @@ it('should generate source maps', function (cb) {
 		.pipe(write);
 
 	write.on('data', function (file) {
-		assert.deepEqual(file.sourceMap.sources, ['fixture.es6']);
+		assert.deepEqual(file.sourceMap.sources, ['fixture.es2015']);
 		assert.strictEqual(file.sourceMap.file, 'fixture.js');
 		var contents = file.contents.toString();
 		assert(/function/.test(contents));
@@ -48,7 +48,7 @@ it('should generate source maps', function (cb) {
 	init.write(new gutil.File({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
-		path: path.join(__dirname, 'fixture/fixture.es6'),
+		path: path.join(__dirname, 'fixture/fixture.es2015'),
 		contents: new Buffer('[].map(v => v + 1)'),
 		sourceMap: ''
 	}));
@@ -66,7 +66,7 @@ it('should generate source maps for file in nested folder', function (cb) {
 		.pipe(write);
 
 	write.on('data', function (file) {
-		assert.deepEqual(file.sourceMap.sources, ['nested/fixture.es6']);
+		assert.deepEqual(file.sourceMap.sources, ['nested/fixture.es2015']);
 		assert.strictEqual(file.sourceMap.file, 'nested/fixture.js');
 		var contents = file.contents.toString();
 		assert(/function/.test(contents));
@@ -77,7 +77,7 @@ it('should generate source maps for file in nested folder', function (cb) {
 	init.write(new gutil.File({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
-		path: path.join(__dirname, 'fixture/nested/fixture.es6'),
+		path: path.join(__dirname, 'fixture/nested/fixture.es2015'),
 		contents: new Buffer('[].map(v => v + 1)'),
 		sourceMap: ''
 	}));

@@ -23,14 +23,12 @@
     "babel",
     "transpiler",
     "es2015",
-    "es6",
     "rewriting",
     "transformation",
     "syntax",
     "codegen",
     "desugaring",
     "javascript",
-    "ecmascript",
     "compiler"
   ],
   "dependencies": {
