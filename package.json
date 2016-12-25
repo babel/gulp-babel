@@ -32,7 +32,7 @@
     "compiler"
   ],
   "dependencies": {
-    "babel-core": "^6.0.2",
+    "babel-core": "^6.1.20",
     "gulp-util": "^3.0.0",
     "object-assign": "^4.0.1",
     "replace-ext": "0.0.1",
