@@ -6,6 +6,8 @@ var applySourceMap = require('vinyl-sourcemaps-apply');
 var objectAssign = require('object-assign');
 var replaceExt = require('replace-ext');
 var babel = require('babel-core');
+var vinylBuffer = require('vinyl-buffer');
+var duplexer2 = require('duplexer2');
 
 function replaceExtension(fp) {
 	return path.extname(fp) ? replaceExt(fp, '.js') : fp;
@@ -14,14 +16,11 @@ function replaceExtension(fp) {
 module.exports = function (opts) {
 	opts = opts || {};
 
-	return through.obj(function (file, enc, cb) {
+	var buffer = vinylBuffer();
+
+	var transform = through.obj(function (file, enc, cb) {
 		if (file.isNull()) {
 			cb(null, file);
-			return;
-		}
-
-		if (file.isStream()) {
-			cb(new gutil.PluginError('gulp-babel', 'Streaming not supported'));
 			return;
 		}
 
@@ -58,4 +57,6 @@ module.exports = function (opts) {
 
 		cb();
 	});
+
+	return duplexer2({objectMode: true, highWaterMark: 16}, buffer, buffer.pipe(transform));
 };

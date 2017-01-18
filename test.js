@@ -1,6 +1,7 @@
 'use strict';
 var path = require('path');
 var assert = require('assert');
+var Readable = require('stream').Readable;
 var gutil = require('gulp-util');
 var sourceMaps = require('gulp-sourcemaps');
 var babel = require('./');
@@ -146,4 +147,31 @@ it('should not rename files without an extension', function (cb) {
 		})
 		.on('end', cb)
 		.end(new gutil.File(inputFile));
+});
+
+it('should handle stream type file', function (cb) {
+	var stream = babel({
+		plugins: ['transform-es2015-block-scoping']
+	});
+
+	stream.on('data', function (file) {
+		assert(/var foo/.test(file.contents.toString()), file.contents.toString());
+		assert.equal(file.relative, 'fixture.js');
+	});
+
+	stream.on('end', cb);
+
+	var readable = new Readable();
+
+	stream.write(new gutil.File({
+		cwd: __dirname,
+		base: path.join(__dirname, 'fixture'),
+		path: path.join(__dirname, 'fixture/fixture.jsx'),
+		contents: readable
+	}));
+
+	readable.push('let foo;');
+	readable.push(null);
+
+	stream.end();
 });
