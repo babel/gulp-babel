@@ -1,10 +1,10 @@
 'use strict';
-var path = require('path');
-var gutil = require('gulp-util');
-var through = require('through2');
-var applySourceMap = require('vinyl-sourcemaps-apply');
-var replaceExt = require('replace-ext');
-var babel = require('babel-core');
+const path = require('path');
+const gutil = require('gulp-util');
+const through = require('through2');
+const applySourceMap = require('vinyl-sourcemaps-apply');
+const replaceExt = require('replace-ext');
+const babel = require('babel-core');
 
 function replaceExtension(fp) {
 	return path.extname(fp) ? replaceExt(fp, '.js') : fp;
@@ -25,7 +25,7 @@ module.exports = function (opts) {
 		}
 
 		try {
-			var fileOpts = Object.assign({}, opts, {
+			const fileOpts = Object.assign({}, opts, {
 				filename: file.path,
 				filenameRelative: file.relative,
 				sourceMap: Boolean(file.sourceMap),
@@ -33,7 +33,7 @@ module.exports = function (opts) {
 				sourceMapTarget: file.relative
 			});
 
-			var res = babel.transform(file.contents.toString(), fileOpts);
+			const res = babel.transform(file.contents.toString(), fileOpts);
 
 			if (res !== null) {
 				if (file.sourceMap && res.map) {
@@ -42,7 +42,7 @@ module.exports = function (opts) {
 				}
 
 				if (!res.ignored) {
-					file.contents = new Buffer(res.code);
+					file.contents = Buffer.from(res.code);
 					file.path = replaceExtension(file.path);
 				}
 
