@@ -10,7 +10,7 @@
     "url": "sindresorhus.com"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4"
   },
   "scripts": {
     "test": "xo && mocha"
@@ -34,7 +34,7 @@
     "compiler"
   ],
   "dependencies": {
-    "babel-core": "^6.23.1",
+    "babel-core": "^7.0.0-alpha.3",
     "gulp-util": "^3.0.0",
     "object-assign": "^4.0.1",
     "replace-ext": "0.0.1",
@@ -42,9 +42,9 @@
     "vinyl-sourcemaps-apply": "^0.2.0"
   },
   "devDependencies": {
-    "babel-plugin-transform-es2015-arrow-functions": "^6.0.2",
-    "babel-plugin-transform-es2015-block-scoping": "^6.0.9",
-    "babel-plugin-transform-es2015-classes": "^6.0.8",
+    "babel-plugin-transform-es2015-arrow-functions": "^7.0.0-alpha.3",
+    "babel-plugin-transform-es2015-block-scoping": "^7.0.0-alpha.3",
+    "babel-plugin-transform-es2015-classes": "^7.0.0-alpha.3",
     "gulp-sourcemaps": "^1.1.1",
     "mocha": "*",
     "xo": "*"

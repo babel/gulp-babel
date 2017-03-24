@@ -108,7 +108,7 @@ it('should list used helpers in file.babel', function (cb) {
 
 it('should not rename ignored files', function (cb) {
 	var stream = babel({
-		ignore: /fixture/
+		ignore: [/fixture/]
 	});
 
 	var inputFile = {

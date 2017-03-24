@@ -36,17 +36,19 @@ module.exports = function (opts) {
 
 			var res = babel.transform(file.contents.toString(), fileOpts);
 
-			if (file.sourceMap && res.map) {
-				res.map.file = replaceExtension(res.map.file);
-				applySourceMap(file, res.map);
-			}
+			if (res !== null) {
+				if (file.sourceMap && res.map) {
+					res.map.file = replaceExtension(res.map.file);
+					applySourceMap(file, res.map);
+				}
 
-			if (!res.ignored) {
-				file.contents = new Buffer(res.code);
-				file.path = replaceExtension(file.path);
-			}
+				if (!res.ignored) {
+					file.contents = new Buffer(res.code);
+					file.path = replaceExtension(file.path);
+				}
 
-			file.babel = res.metadata;
+				file.babel = res.metadata;
+			}
 
 			this.push(file);
 		} catch (err) {
