@@ -3,7 +3,6 @@ var path = require('path');
 var gutil = require('gulp-util');
 var through = require('through2');
 var applySourceMap = require('vinyl-sourcemaps-apply');
-var objectAssign = require('object-assign');
 var replaceExt = require('replace-ext');
 var babel = require('babel-core');
 
@@ -26,7 +25,7 @@ module.exports = function (opts) {
 		}
 
 		try {
-			var fileOpts = objectAssign({}, opts, {
+			var fileOpts = Object.assign({}, opts, {
 				filename: file.path,
 				filenameRelative: file.relative,
 				sourceMap: Boolean(file.sourceMap),
