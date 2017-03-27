@@ -34,7 +34,7 @@
     "compiler"
   ],
   "dependencies": {
-    "babel-core": "^7.0.0-alpha.3",
+    "babel-core": "^7.0.0-alpha.6",
     "gulp-util": "^3.0.0",
     "replace-ext": "0.0.1",
     "through2": "^2.0.0",
