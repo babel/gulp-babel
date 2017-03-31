@@ -26,19 +26,32 @@ module.exports = function (opts) {
 		}
 
 		try {
-			var fileOpts = objectAssign({}, opts, {
+			var isInputSourceMapPresent = Boolean(file.sourceMap);
+			var defaultOpts = {
 				filename: file.path,
-				filenameRelative: file.relative,
-				sourceMap: Boolean(file.sourceMap),
-				sourceFileName: file.relative,
-				sourceMapTarget: file.relative
-			});
+				filenameRelative: file.relative
+			};
+
+			if (isInputSourceMapPresent) {
+				defaultOpts.inputSourceMap = file.sourceMap;
+			}
+			else {
+				defaultOpts.sourceFileName = file.relative;
+				defaultOpts.sourceMapTarget = file.relative;
+			}
+
+			var fileOpts = objectAssign({}, opts, defaultOpts);
 
 			var res = babel.transform(file.contents.toString(), fileOpts);
 
 			if (file.sourceMap && res.map) {
-				res.map.file = replaceExtension(res.map.file);
-				applySourceMap(file, res.map);
+				if (isInputSourceMapPresent) {
+					file.sourceMap = res.map;
+				}
+				else {
+					res.map.file = replaceExtension(res.map.file);
+					applySourceMap(file, res.map);
+				}
 			}
 
 			if (!res.ignored) {
