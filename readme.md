@@ -8,7 +8,7 @@
 ## Install
 
 ```
-$ npm install --save-dev gulp-babel babel-preset-es2015
+$ npm install --save-dev gulp-babel babel-preset-env
 ```
 
 
@@ -21,7 +21,7 @@ const babel = require('gulp-babel');
 gulp.task('default', () =>
 	gulp.src('src/app.js')
 		.pipe(babel({
-			presets: ['es2015']
+			presets: ['env']
 		}))
 		.pipe(gulp.dest('dist'))
 );
@@ -51,7 +51,7 @@ gulp.task('default', () =>
 	gulp.src('src/**/*.js')
 		.pipe(sourcemaps.init())
 		.pipe(babel({
-			presets: ['es2015']
+			presets: ['env']
 		}))
 		.pipe(concat('all.js'))
 		.pipe(sourcemaps.write('.'))
@@ -81,7 +81,7 @@ function logFileHelpers() {
 gulp.task('default', () =>
 	gulp.src('src/**/*.js')
 		.pipe(babel({
-			presets: ['es2015']
+			presets: ['env']
 		}))
 		.pipe(logFileHelpers())
 )

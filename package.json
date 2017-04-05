@@ -23,6 +23,8 @@
     "babel",
     "transpiler",
     "es2015",
+    "es2016",
+    "es2017",
     "rewriting",
     "transformation",
     "syntax",
@@ -32,7 +34,7 @@
     "compiler"
   ],
   "dependencies": {
-    "babel-core": "^6.0.2",
+    "babel-core": "^6.23.1",
     "gulp-util": "^3.0.0",
     "object-assign": "^4.0.1",
     "replace-ext": "0.0.1",
