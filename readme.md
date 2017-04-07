@@ -30,12 +30,28 @@ gulp.task('default', () =>
 
 ## API
 
-### babel([options])
+```js
+const createBabel = require('gulp-babel');
 
-#### options
+/**
+ * @see https://github.com/isaacs/node-lru-cache#options
+ */
+type lruOptions = {
+	max: ?number,
+	length: ?Function,
+	dispose: ?Function,
+	maxAge: ?number
+};
 
-See the Babel [options](https://babeljs.io/docs/usage/options/), except for `sourceMap` and `filename` which is handled for you.
+/**
+ * @see See the Babel options (https://babeljs.io/docs/usage/options/), except for `sourceMap` and `filename` which is handled for you.
+ */
+type babelOptions = {};
 
+const babel = createBabel({max: 500}: lruOptions);
+
+babel({}: babelOptions);
+```
 
 ## Source Maps
 
@@ -44,8 +60,10 @@ Use [gulp-sourcemaps](https://github.com/floridoo/gulp-sourcemaps) like this:
 ```js
 const gulp = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
-const babel = require('gulp-babel');
+const createBabel = require('gulp-babel');
 const concat = require('gulp-concat');
+
+const babel = createBabel();
 
 gulp.task('default', () =>
 	gulp.src('src/**/*.js')
@@ -59,7 +77,6 @@ gulp.task('default', () =>
 );
 ```
 
-
 ## Babel Metadata
 
 Files in the stream are annotated with a `babel` property, which contains the metadata from [`babel.transform()`](https://babeljs.io/docs/usage/api/).
@@ -68,8 +85,10 @@ Files in the stream are annotated with a `babel` property, which contains the me
 
 ```js
 const gulp = require('gulp');
-const babel = require('gulp-babel');
+const createBabel = require('gulp-babel');
 const through = require('through2');
+
+const babel = createBabel();
 
 function logFileHelpers() {
 	return through.obj((file, enc, cb) => {
@@ -102,7 +121,9 @@ Use it as plugin:
 
 ```js
 const gulp = require('gulp');
-const babel = require('gulp-babel');
+const createBabel = require('gulp-babel');
+
+const babel = createBabel();
 
 gulp.task('default', () =>
 	gulp.src('src/app.js')
