@@ -30,12 +30,22 @@ gulp.task('default', () =>
 
 ## API
 
-### babel([options])
+### babel([babelOptions], [options])
 
-#### options
+#### babelOptions
 
 See the Babel [options](https://babeljs.io/docs/usage/options/), except for `sourceMap` and `filename` which is handled for you.
 
+#### options
+
+Below are the available options and their defaults.
+
+```
+{
+    // Set to true to preserve source file extensions.
+    preserveExtensions: false
+}
+```
 
 ## Source Maps
 
