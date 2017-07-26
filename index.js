@@ -42,7 +42,7 @@ module.exports = function (opts) {
 				}
 
 				if (!res.ignored) {
-					file.contents = Buffer.from(res.code);
+					file.contents = new Buffer(res.code); // eslint-disable-line unicorn/no-new-buffer
 					file.path = replaceExtension(file.path);
 				}
 
