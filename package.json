@@ -34,13 +34,16 @@
     "compiler"
   ],
   "dependencies": {
-    "babel-core": "7.0.0-alpha.18",
     "gulp-util": "^3.0.0",
     "replace-ext": "0.0.1",
     "through2": "^2.0.0",
     "vinyl-sourcemaps-apply": "^0.2.0"
   },
+  "peerDependencies": {
+    "babel-core": "6 || 7 || ^7.0.0-alpha || ^7.0.0-beta || ^7.0.0-rc"
+  },
   "devDependencies": {
+    "babel-core": "7.0.0-alpha.18",
     "babel-plugin-transform-es2015-arrow-functions": "7.0.0-alpha.18",
     "babel-plugin-transform-es2015-block-scoping": "7.0.0-alpha.18",
     "babel-plugin-transform-es2015-classes": "7.0.0-alpha.18",
