@@ -8,7 +8,7 @@
 ## Install
 
 ```
-$ npm install --save-dev gulp-babel babel-preset-env
+$ npm install --save-dev babel-core gulp-babel babel-preset-env
 ```
 
 
