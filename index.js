@@ -60,3 +60,14 @@ module.exports = function (opts) {
 		cb();
 	});
 };
+
+/**
+ * Handy pretty-printed log for errors.
+ *
+ * It emits 'end' to signal the task has ended, otherwise it would just abruptly exit gulp.
+ * @param {Object} error - a gutil.PluginError
+ */
+module.exports.logError = function (error) {
+	process.stderr.write(error.toString() + '\n' + error.codeFrame + '\n');
+	this.emit('end');
+}
