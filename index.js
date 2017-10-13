@@ -70,4 +70,4 @@ module.exports = function (opts) {
 module.exports.logError = function (error) {
 	process.stderr.write(error.toString() + '\n' + error.codeFrame + '\n');
 	this.emit('end');
-}
+};
