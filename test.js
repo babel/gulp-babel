@@ -7,7 +7,7 @@ const babel = require('./');
 
 it('should transpile with Babel', cb => {
 	const stream = babel({
-		plugins: ['transform-es2015-block-scoping']
+		plugins: ['@babel/transform-block-scoping']
 	});
 
 	stream.on('data', file => {
@@ -32,7 +32,7 @@ it('should generate source maps', cb => {
 	const write = sourceMaps.write();
 	init
 		.pipe(babel({
-			plugins: ['transform-es2015-arrow-functions']
+			plugins: ['@babel/transform-arrow-functions']
 		}))
 		.pipe(write);
 
@@ -61,7 +61,7 @@ it('should generate source maps for file in nested folder', cb => {
 	const write = sourceMaps.write();
 	init
 		.pipe(babel({
-			plugins: ['transform-es2015-arrow-functions']
+			plugins: ['@babel/transform-arrow-functions']
 		}))
 		.pipe(write);
 
@@ -85,13 +85,17 @@ it('should generate source maps for file in nested folder', cb => {
 	init.end();
 });
 
-it('should list used helpers in file.babel', cb => {
+it('should pass the result of transform().metadata in file.babel', cb => {
 	const stream = babel({
-		plugins: ['transform-es2015-classes']
+		plugins: [{
+			post(file) {
+				file.metadata.test = 'metadata';
+			}
+		}]
 	});
 
 	stream.on('data', file => {
-		assert.deepEqual(file.babel.usedHelpers, ['classCallCheck']);
+		assert.deepEqual(file.babel, {test: 'metadata'});
 	});
 
 	stream.on('end', cb);
