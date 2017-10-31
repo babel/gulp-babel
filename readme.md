@@ -34,7 +34,9 @@ gulp.task('default', () =>
 
 #### options
 
-See the Babel [options](https://babeljs.io/docs/usage/options/), except for `sourceMap` and `filename` which is handled for you.
+See the Babel [options](https://babeljs.io/docs/usage/options/), except for `sourceMap` and `filename` which is handled for you. 
+
+When present `.babelrc` file will be read if no `options` parameters are provided.
 
 
 ## Source Maps
