@@ -34,8 +34,8 @@
     "compiler"
   ],
   "dependencies": {
-    "gulp-util": "^3.0.0",
-    "replace-ext": "0.0.1",
+    "plugin-error": "^0.1.2",
+    "replace-ext": "^1.0.0",
     "through2": "^2.0.0",
     "vinyl-sourcemaps-apply": "^0.2.0"
   },
@@ -49,6 +49,7 @@
     "@babel/plugin-transform-classes": "7.0.0-beta.5",
     "gulp-sourcemaps": "^1.1.1",
     "mocha": "*",
+    "vinyl": "^2.1.0",
     "xo": "*"
   },
   "xo": {
