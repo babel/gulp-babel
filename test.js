@@ -1,7 +1,7 @@
 'use strict';
 var path = require('path');
 var assert = require('assert');
-var gutil = require('gulp-util');
+var Vinyl = require('vinyl');
 var sourceMaps = require('gulp-sourcemaps');
 var babel = require('./');
 
@@ -17,7 +17,7 @@ it('should transpile with Babel', function (cb) {
 
 	stream.on('end', cb);
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture/fixture.jsx'),
@@ -45,7 +45,7 @@ it('should generate source maps', function (cb) {
 		cb();
 	});
 
-	init.write(new gutil.File({
+	init.write(new Vinyl({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture/fixture.es2015'),
@@ -74,7 +74,7 @@ it('should generate source maps for file in nested folder', function (cb) {
 		cb();
 	});
 
-	init.write(new gutil.File({
+	init.write(new Vinyl({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture/nested/fixture.es2015'),
@@ -96,7 +96,7 @@ it('should list used helpers in file.babel', function (cb) {
 
 	stream.on('end', cb);
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture/fixture.js'),
@@ -125,7 +125,7 @@ it('should not rename ignored files', function (cb) {
 			assert.equal(file.relative, inputFile.basename);
 		})
 		.on('end', cb)
-		.end(new gutil.File(inputFile));
+		.end(new Vinyl(inputFile));
 });
 
 it('should not rename files without an extension', function (cb) {
@@ -145,5 +145,5 @@ it('should not rename files without an extension', function (cb) {
 			assert.equal(file.relative, inputFile.basename);
 		})
 		.on('end', cb)
-		.end(new gutil.File(inputFile));
+		.end(new Vinyl(inputFile));
 });
