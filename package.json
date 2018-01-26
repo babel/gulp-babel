@@ -1,6 +1,6 @@
 {
   "name": "gulp-babel",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "Use next generation JavaScript, today",
   "license": "MIT",
   "repository": "babel/gulp-babel",
