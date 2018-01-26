@@ -1,4 +1,4 @@
-# gulp-babel [![Build Status](https://travis-ci.org/babel/gulp-babel.svg?branch=master)](https://travis-ci.org/babel/gulp-babel)
+# gulp-babel [![npm](https://img.shields.io/npm/v/gulp-babel.svg?maxAge=2592000)](https://www.npmjs.com/package/gulp-babel) [![Build Status](https://travis-ci.org/babel/gulp-babel.svg?branch=master)](https://travis-ci.org/babel/gulp-babel)
 
 > Use next generation JavaScript, today, with [Babel](https://babeljs.io)
 
@@ -11,6 +11,7 @@
 $ npm install --save-dev gulp-babel @babel/core @babel/preset-env
 ```
 
+Install `gulp-babel@next` if you want to get the pre-release of the next version of `gulp-babel`.
 
 ## Usage
 

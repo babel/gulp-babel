@@ -4,16 +4,20 @@
   "description": "Use next generation JavaScript, today",
   "license": "MIT",
   "repository": "babel/gulp-babel",
-  "author": {
-    "name": "Sindre Sorhus",
-    "email": "sindresorhus@gmail.com",
-    "url": "sindresorhus.com"
-  },
+  "author": "Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)",
+  "contributors": [
+    "Charles Samborski <demurgos@demurgos.net> (demurgos.net)"
+  ],
   "engines": {
     "node": ">=4"
   },
   "scripts": {
     "test": "xo && mocha"
+  },
+  "pre-commit": {
+    "run": [
+      "test"
+    ]
   },
   "files": [
     "index.js"
@@ -34,7 +38,7 @@
     "compiler"
   ],
   "dependencies": {
-    "plugin-error": "^0.1.2",
+    "plugin-error": "^1.0.1",
     "replace-ext": "^1.0.0",
     "through2": "^2.0.0",
     "vinyl-sourcemaps-apply": "^0.2.0"
@@ -48,9 +52,10 @@
     "@babel/plugin-transform-block-scoping": "7.0.0-beta.5",
     "@babel/plugin-transform-classes": "7.0.0-beta.5",
     "gulp-sourcemaps": "^1.1.1",
-    "mocha": "*",
+    "mocha": "^5.0.0",
+    "pre-commit": "^1.2.2",
     "vinyl": "^2.1.0",
-    "xo": "*"
+    "xo": "^0.18.2"
   },
   "xo": {
     "envs": [
