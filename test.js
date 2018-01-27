@@ -1,13 +1,13 @@
 'use strict';
 const path = require('path');
 const assert = require('assert');
-const gutil = require('gulp-util');
+const Vinyl = require('vinyl');
 const sourceMaps = require('gulp-sourcemaps');
 const babel = require('./');
 
 it('should transpile with Babel', cb => {
 	const stream = babel({
-		plugins: ['transform-es2015-block-scoping']
+		plugins: ['@babel/transform-block-scoping']
 	});
 
 	stream.on('data', file => {
@@ -17,7 +17,7 @@ it('should transpile with Babel', cb => {
 
 	stream.on('end', cb);
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture/fixture.jsx'),
@@ -32,7 +32,7 @@ it('should generate source maps', cb => {
 	const write = sourceMaps.write();
 	init
 		.pipe(babel({
-			plugins: ['transform-es2015-arrow-functions']
+			plugins: ['@babel/transform-arrow-functions']
 		}))
 		.pipe(write);
 
@@ -45,7 +45,7 @@ it('should generate source maps', cb => {
 		cb();
 	});
 
-	init.write(new gutil.File({
+	init.write(new Vinyl({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture/fixture.es2015'),
@@ -61,7 +61,7 @@ it('should generate source maps for file in nested folder', cb => {
 	const write = sourceMaps.write();
 	init
 		.pipe(babel({
-			plugins: ['transform-es2015-arrow-functions']
+			plugins: ['@babel/transform-arrow-functions']
 		}))
 		.pipe(write);
 
@@ -74,7 +74,7 @@ it('should generate source maps for file in nested folder', cb => {
 		cb();
 	});
 
-	init.write(new gutil.File({
+	init.write(new Vinyl({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture/nested/fixture.es2015'),
@@ -85,18 +85,22 @@ it('should generate source maps for file in nested folder', cb => {
 	init.end();
 });
 
-it('should list used helpers in file.babel', cb => {
+it('should pass the result of transform().metadata in file.babel', cb => {
 	const stream = babel({
-		plugins: ['transform-es2015-classes']
+		plugins: [{
+			post(file) {
+				file.metadata.test = 'metadata';
+			}
+		}]
 	});
 
 	stream.on('data', file => {
-		assert.deepEqual(file.babel.usedHelpers, ['classCallCheck']);
+		assert.deepEqual(file.babel, {test: 'metadata'});
 	});
 
 	stream.on('end', cb);
 
-	stream.write(new gutil.File({
+	stream.write(new Vinyl({
 		cwd: __dirname,
 		base: path.join(__dirname, 'fixture'),
 		path: path.join(__dirname, 'fixture/fixture.js'),
@@ -125,7 +129,7 @@ it('should not rename ignored files', cb => {
 			assert.equal(file.relative, inputFile.basename);
 		})
 		.on('end', cb)
-		.end(new gutil.File(inputFile));
+		.end(new Vinyl(inputFile));
 });
 
 it('should not rename files without an extension', cb => {
@@ -145,5 +149,5 @@ it('should not rename files without an extension', cb => {
 			assert.equal(file.relative, inputFile.basename);
 		})
 		.on('end', cb)
-		.end(new gutil.File(inputFile));
+		.end(new Vinyl(inputFile));
 });

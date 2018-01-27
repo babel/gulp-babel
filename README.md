@@ -1,4 +1,4 @@
-# gulp-babel [![Build Status](https://travis-ci.org/babel/gulp-babel.svg?branch=master)](https://travis-ci.org/babel/gulp-babel)
+# gulp-babel [![npm](https://img.shields.io/npm/v/gulp-babel.svg?maxAge=2592000)](https://www.npmjs.com/package/gulp-babel) [![Build Status](https://travis-ci.org/babel/gulp-babel.svg?branch=master)](https://travis-ci.org/babel/gulp-babel)
 
 > Use next generation JavaScript, today, with [Babel](https://babeljs.io)
 
@@ -8,9 +8,10 @@
 ## Install
 
 ```
-$ npm install --save-dev gulp-babel babel-preset-env
+$ npm install --save-dev gulp-babel @babel/core @babel/preset-env
 ```
 
+Install `gulp-babel@next` if you want to get the pre-release of the next version of `gulp-babel`.
 
 ## Usage
 
@@ -21,7 +22,7 @@ const babel = require('gulp-babel');
 gulp.task('default', () =>
 	gulp.src('src/app.js')
 		.pipe(babel({
-			presets: ['env']
+			presets: ['@babel/env']
 		}))
 		.pipe(gulp.dest('dist'))
 );
@@ -51,7 +52,7 @@ gulp.task('default', () =>
 	gulp.src('src/**/*.js')
 		.pipe(sourcemaps.init())
 		.pipe(babel({
-			presets: ['env']
+			presets: ['@babel/env']
 		}))
 		.pipe(concat('all.js'))
 		.pipe(sourcemaps.write('.'))
@@ -71,9 +72,9 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const through = require('through2');
 
-function logFileHelpers() {
+function logBabelMetadata() {
 	return through.obj((file, enc, cb) => {
-		console.log(file.babel.usedHelpers);
+		console.log(file.babel.test); // 'metadata'
 		cb(null, file);
 	});
 }
@@ -81,9 +82,14 @@ function logFileHelpers() {
 gulp.task('default', () =>
 	gulp.src('src/**/*.js')
 		.pipe(babel({
-			presets: ['env']
+			// plugin that sets some metadata
+			plugins: [{
+				post(file) {
+					file.metadata.test = 'metadata';
+				}
+			}]
 		}))
-		.pipe(logFileHelpers())
+		.pipe(logBabelMetadta())
 )
 ```
 
@@ -95,7 +101,7 @@ If you're attempting to use features such as generators, you'll need to add `tra
 Install the runtime:
 
 ```
-$ npm install --save-dev babel-plugin-transform-runtime
+$ npm install --save-dev @babel/plugin-transform-runtime
 ```
 
 Use it as plugin:
@@ -107,7 +113,7 @@ const babel = require('gulp-babel');
 gulp.task('default', () =>
 	gulp.src('src/app.js')
 		.pipe(babel({
-			plugins: ['transform-runtime']
+			plugins: ['@babel/transform-runtime']
 		}))
 		.pipe(gulp.dest('dist'))
 );
