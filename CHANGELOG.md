@@ -1,4 +1,4 @@
-# 8.0.0-beta.1 (2017-01-26)
+# 8.0.0-beta.1 (2018-01-26)
 
 - **[Fix]** Drop dependency on deprecated `gulp-util` ([#137](https://github.com/babel/gulp-babel/pull/137))
 - **[Chore]** Update repository: add `CHANGELOG.md`, update `.gitignore`, license year, update dependencies,
