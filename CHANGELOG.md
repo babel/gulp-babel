@@ -1,3 +1,7 @@
+# 8.0.0-beta.2 (2018-03-14)
+
+- **[Fix]** Fix for `sourceMapTarget` removal in Babel v7.0.0-beta.41 ([#149](https://github.com/babel/gulp-babel/pull/149))
+
 # 8.0.0-beta.1 (2018-01-26)
 
 - **[Fix]** Drop dependency on deprecated `gulp-util` ([#137](https://github.com/babel/gulp-babel/pull/137))
