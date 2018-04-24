@@ -29,15 +29,14 @@ module.exports = function (opts) {
 				filename: file.path,
 				filenameRelative: file.relative,
 				sourceMap: Boolean(file.sourceMap),
-				sourceFileName: file.relative,
-				sourceMapTarget: file.relative
+				sourceFileName: file.relative
 			});
 
 			const res = babel.transform(file.contents.toString(), fileOpts);
 
 			if (res !== null) {
 				if (file.sourceMap && res.map) {
-					res.map.file = replaceExtension(res.map.file);
+					res.map.file = replaceExtension(file.relative);
 					applySourceMap(file, res.map);
 				}
 

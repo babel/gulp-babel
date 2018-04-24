@@ -7,11 +7,15 @@
 
 ## Install
 
-```
-$ npm install --save-dev gulp-babel @babel/core @babel/preset-env
-```
-
 Install `gulp-babel@next` if you want to get the pre-release of the next version of `gulp-babel`.
+
+```
+# Babel 7 (use exact dependencies while in beta, not `^`)
+$ npm install --save-dev gulp-babel@next @babel/core @babel/preset-env
+
+# Babel 6
+$ npm install --save-dev gulp-babel babel-core babel-preset-env
+```
 
 ## Usage
 
