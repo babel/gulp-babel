@@ -93,7 +93,7 @@ gulp.task('default', () =>
 				}
 			}]
 		}))
-		.pipe(logBabelMetadta())
+		.pipe(logBabelMetadata())
 )
 ```
 
