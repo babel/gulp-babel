@@ -1,3 +1,6 @@
+> This readme is for gulp-babel v8 + Babel v7
+> Check the [7.x branch](https://github.com/babel/gulp-babel/tree/v7-maintenance) for docs with Babel v6 usage
+
 # gulp-babel [![npm](https://img.shields.io/npm/v/gulp-babel.svg?maxAge=2592000)](https://www.npmjs.com/package/gulp-babel) [![Build Status](https://travis-ci.org/babel/gulp-babel.svg?branch=master)](https://travis-ci.org/babel/gulp-babel)
 
 > Use next generation JavaScript, today, with [Babel](https://babeljs.io)
@@ -7,14 +10,14 @@
 
 ## Install
 
-Install `gulp-babel@next` if you want to get the pre-release of the next version of `gulp-babel`.
+Install `gulp-babel` if you want to get the pre-release of the next version of `gulp-babel`.
 
 ```
-# Babel 7 (use exact dependencies while in beta, not `^`)
-$ npm install --save-dev gulp-babel@next @babel/core @babel/preset-env
+# Babel 7
+$ npm install --save-dev gulp-babel @babel/core @babel/preset-env
 
 # Babel 6
-$ npm install --save-dev gulp-babel babel-core babel-preset-env
+$ npm install --save-dev gulp-babel@7 babel-core babel-preset-env
 ```
 
 ## Usage
@@ -105,7 +108,8 @@ If you're attempting to use features such as generators, you'll need to add `tra
 Install the runtime:
 
 ```
-$ npm install --save-dev @babel/plugin-transform-runtime
+$ npm install --save-dev @babel/plugin-transform-runtime 
+$ npm install --save @babel/runtime 
 ```
 
 Use it as plugin:
