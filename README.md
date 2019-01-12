@@ -29,7 +29,7 @@ const babel = require('gulp-babel');
 gulp.task('default', () =>
 	gulp.src('src/app.js')
 		.pipe(babel({
-			presets: ['@babel/env']
+			presets: ['@babel/preset-env']
 		}))
 		.pipe(gulp.dest('dist'))
 );
@@ -58,7 +58,7 @@ gulp.task('default', () =>
 	gulp.src('src/**/*.js')
 		.pipe(sourcemaps.init())
 		.pipe(babel({
-			presets: ['@babel/env']
+			presets: ['@babel/preset-env']
 		}))
 		.pipe(concat('all.js'))
 		.pipe(sourcemaps.write('.'))
@@ -107,8 +107,8 @@ If you're attempting to use features such as generators, you'll need to add `tra
 Install the runtime:
 
 ```
-$ npm install --save-dev @babel/plugin-transform-runtime 
-$ npm install --save @babel/runtime 
+$ npm install --save-dev @babel/plugin-transform-runtime
+$ npm install --save @babel/runtime
 ```
 
 Use it as plugin:
