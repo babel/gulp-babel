@@ -3,7 +3,7 @@ const path = require('path');
 const assert = require('assert');
 const Vinyl = require('vinyl');
 const sourceMaps = require('gulp-sourcemaps');
-const babel = require('./');
+const babel = require('.');
 
 it('should transpile with Babel', cb => {
 	const stream = babel({
@@ -12,7 +12,7 @@ it('should transpile with Babel', cb => {
 
 	stream.on('data', file => {
 		assert(/var foo/.test(file.contents.toString()), file.contents.toString());
-		assert.equal(file.relative, 'fixture.js');
+		assert.strictEqual(file.relative, 'fixture.js');
 	});
 
 	stream.on('end', cb);
@@ -37,7 +37,7 @@ it('should generate source maps', cb => {
 		.pipe(write);
 
 	write.on('data', file => {
-		assert.deepEqual(file.sourceMap.sources, ['fixture.es2015']);
+		assert.deepStrictEqual(file.sourceMap.sources, ['fixture.es2015']);
 		assert.strictEqual(file.sourceMap.file, 'fixture.js');
 		const contents = file.contents.toString();
 		assert(/function/.test(contents));
@@ -66,7 +66,7 @@ it('should generate source maps for file in nested folder', cb => {
 		.pipe(write);
 
 	write.on('data', file => {
-		assert.deepEqual(file.sourceMap.sources, ['nested/fixture.es2015']);
+		assert.deepStrictEqual(file.sourceMap.sources, ['nested/fixture.es2015']);
 		assert.strictEqual(file.sourceMap.file, 'nested/fixture.js');
 		const contents = file.contents.toString();
 		assert(/function/.test(contents));
@@ -95,7 +95,7 @@ it('should pass the result of transform().metadata in file.babel', cb => {
 	});
 
 	stream.on('data', file => {
-		assert.deepEqual(file.babel, {test: 'metadata'});
+		assert.deepStrictEqual(file.babel, {test: 'metadata'});
 	});
 
 	stream.on('end', cb);
@@ -126,7 +126,7 @@ it('should not rename ignored files', cb => {
 
 	stream
 		.on('data', file => {
-			assert.equal(file.relative, inputFile.basename);
+			assert.strictEqual(file.relative, inputFile.basename);
 		})
 		.on('end', cb)
 		.end(new Vinyl(inputFile));
@@ -146,7 +146,7 @@ it('should not rename files without an extension', cb => {
 
 	stream
 		.on('data', file => {
-			assert.equal(file.relative, inputFile.basename);
+			assert.strictEqual(file.relative, inputFile.basename);
 		})
 		.on('end', cb)
 		.end(new Vinyl(inputFile));
