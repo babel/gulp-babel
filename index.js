@@ -47,15 +47,15 @@ module.exports = function (opts) {
 					applySourceMap(file, res.map);
 				}
 
-				file.contents = new Buffer(res.code); // eslint-disable-line unicorn/no-new-buffer
+				file.contents = Buffer.from(res.code);
 				file.path = replaceExtension(file.path);
 
 				file.babel = res.metadata;
 			}
 
 			this.push(file);
-		}).catch(err => {
-			this.emit('error', new PluginError('gulp-babel', err, {
+		}).catch(error => {
+			this.emit('error', new PluginError('gulp-babel', error, {
 				fileName: file.path,
 				showProperties: false
 			}));
@@ -81,7 +81,7 @@ function supportsCallerOption() {
 				configFile: false
 			});
 			supportsCallerOptionFlag = true;
-		} catch (err) {
+		} catch (error) {
 			supportsCallerOptionFlag = false;
 		}
 	}
