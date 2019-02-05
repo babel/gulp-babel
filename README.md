@@ -1,4 +1,7 @@
-# gulp-babel [![Build Status](https://travis-ci.org/babel/gulp-babel.svg?branch=master)](https://travis-ci.org/babel/gulp-babel)
+> This readme is for gulp-babel v8 + Babel v7
+> Check the [7.x branch](https://github.com/babel/gulp-babel/tree/v7-maintenance) for docs with Babel v6 usage
+
+# gulp-babel [![npm](https://img.shields.io/npm/v/gulp-babel.svg?maxAge=2592000)](https://www.npmjs.com/package/gulp-babel) [![Build Status](https://travis-ci.org/babel/gulp-babel.svg?branch=master)](https://travis-ci.org/babel/gulp-babel)
 
 > Use next generation JavaScript, today, with [Babel](https://babeljs.io)
 
@@ -7,10 +10,15 @@
 
 ## Install
 
-```
-$ npm install --save-dev gulp-babel babel-preset-es2015
-```
+Install `gulp-babel` if you want to get the pre-release of the next version of `gulp-babel`.
 
+```
+# Babel 7
+$ npm install --save-dev gulp-babel @babel/core @babel/preset-env
+
+# Babel 6
+$ npm install --save-dev gulp-babel@7 babel-core babel-preset-env
+```
 
 ## Usage
 
@@ -21,7 +29,7 @@ const babel = require('gulp-babel');
 gulp.task('default', () =>
 	gulp.src('src/app.js')
 		.pipe(babel({
-			presets: ['es2015']
+			presets: ['@babel/preset-env']
 		}))
 		.pipe(gulp.dest('dist'))
 );
@@ -34,8 +42,7 @@ gulp.task('default', () =>
 
 #### options
 
-See the Babel [options](https://babeljs.io/docs/usage/options/), except for `sourceMap` and `filename` which is handled for you.
-
+See the Babel [options](http://babeljs.io/docs/en/options), except for `sourceMaps` and `filename` which is handled for you. Also, keep in mind that options will be loaded from [config files](http://babeljs.io/docs/en/config-files) that apply to each file.
 
 ## Source Maps
 
@@ -51,7 +58,7 @@ gulp.task('default', () =>
 	gulp.src('src/**/*.js')
 		.pipe(sourcemaps.init())
 		.pipe(babel({
-			presets: ['es2015']
+			presets: ['@babel/preset-env']
 		}))
 		.pipe(concat('all.js'))
 		.pipe(sourcemaps.write('.'))
@@ -71,9 +78,9 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const through = require('through2');
 
-function logFileHelpers() {
+function logBabelMetadata() {
 	return through.obj((file, enc, cb) => {
-		console.log(file.babel.usedHelpers);
+		console.log(file.babel.test); // 'metadata'
 		cb(null, file);
 	});
 }
@@ -81,9 +88,14 @@ function logFileHelpers() {
 gulp.task('default', () =>
 	gulp.src('src/**/*.js')
 		.pipe(babel({
-			presets: ['es2015']
+			// plugin that sets some metadata
+			plugins: [{
+				post(file) {
+					file.metadata.test = 'metadata';
+				}
+			}]
 		}))
-		.pipe(logFileHelpers())
+		.pipe(logBabelMetadata())
 )
 ```
 
@@ -95,7 +107,8 @@ If you're attempting to use features such as generators, you'll need to add `tra
 Install the runtime:
 
 ```
-$ npm install --save-dev babel-plugin-transform-runtime
+$ npm install --save-dev @babel/plugin-transform-runtime
+$ npm install --save @babel/runtime
 ```
 
 Use it as plugin:
@@ -107,7 +120,7 @@ const babel = require('gulp-babel');
 gulp.task('default', () =>
 	gulp.src('src/app.js')
 		.pipe(babel({
-			plugins: ['transform-runtime']
+			plugins: ['@babel/transform-runtime']
 		}))
 		.pipe(gulp.dest('dist'))
 );

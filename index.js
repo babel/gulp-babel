@@ -1,11 +1,10 @@
 'use strict';
-var path = require('path');
-var gutil = require('gulp-util');
-var through = require('through2');
-var applySourceMap = require('vinyl-sourcemaps-apply');
-var objectAssign = require('object-assign');
-var replaceExt = require('replace-ext');
-var babel = require('babel-core');
+const path = require('path');
+const PluginError = require('plugin-error');
+const through = require('through2');
+const applySourceMap = require('vinyl-sourcemaps-apply');
+const replaceExt = require('replace-ext');
+const babel = require('@babel/core');
 
 function replaceExtension(fp) {
 	return path.extname(fp) ? replaceExt(fp, '.js') : fp;
@@ -21,54 +20,84 @@ module.exports = function (opts) {
 		}
 
 		if (file.isStream()) {
-			cb(new gutil.PluginError('gulp-babel', 'Streaming not supported'));
+			cb(new PluginError('gulp-babel', 'Streaming not supported'));
 			return;
 		}
 
-		try {
-			var isInputSourceMapPresent = Boolean(file.sourceMap);
-			var defaultOpts = {
-				filename: file.path,
-				filenameRelative: file.relative
-			};
+		if (!supportsCallerOption()) {
+			cb(new PluginError('gulp-babel', '@babel/core@^7.0.0 is required'));
+			return;
+		}
+    
+    
+    const isInputSourceMapPresent = Boolean(file.sourceMap);
+		const defaultOpts = {
+			filename: file.path,
+			filenameRelative: file.relative,
+      caller: Object.assign(
+				{name: 'babel-gulp'},
+				opts.caller
+			)
+		};
 
-			if (isInputSourceMapPresent) {
-				defaultOpts.inputSourceMap = file.sourceMap;
-			}
-			else {
-				defaultOpts.sourceFileName = file.relative;
-				defaultOpts.sourceMapTarget = file.relative;
-			}
+		if (isInputSourceMapPresent) {
+			defaultOpts.inputSourceMap = file.sourceMap;
+		}
+		else {
+			defaultOpts.sourceFileName = file.relative;
+		}
 
-			var fileOpts = objectAssign({}, opts, defaultOpts);
+		const fileOpts = objectAssign({}, opts, defaultOpts);
 
-			var res = babel.transform(file.contents.toString(), fileOpts);
+		babel.transformAsync(file.contents.toString(), fileOpts).then(res => {
+			if (res) {
+        if (file.sourceMap && res.map) {
+				  if (isInputSourceMapPresent) {
+					  file.sourceMap = res.map;
+				  } else {
+					  res.map.file = replaceExtension(file.relative);
+					  applySourceMap(file, res.map);
+				  }
+			  }
 
-			if (file.sourceMap && res.map) {
-				if (isInputSourceMapPresent) {
-					file.sourceMap = res.map;
-				}
-				else {
-					res.map.file = replaceExtension(res.map.file);
-					applySourceMap(file, res.map);
-				}
-			}
-
-			if (!res.ignored) {
-				file.contents = new Buffer(res.code);
+				file.contents = Buffer.from(res.code);
 				file.path = replaceExtension(file.path);
-			}
 
-			file.babel = res.metadata;
+				file.babel = res.metadata;
+			}
 
 			this.push(file);
-		} catch (err) {
-			this.emit('error', new gutil.PluginError('gulp-babel', err, {
+		}).catch(error => {
+			this.emit('error', new PluginError('gulp-babel', error, {
 				fileName: file.path,
 				showProperties: false
 			}));
-		}
-
-		cb();
+		}).then(
+			() => cb(),
+			() => cb()
+		);
 	});
 };
+
+// Note: We can remove this eventually, I'm just adding it so that people have
+// a little time to migrate to the newer RCs of @babel/core without getting
+// hard-to-diagnose errors about unknown 'caller' options.
+let supportsCallerOptionFlag;
+function supportsCallerOption() {
+	if (supportsCallerOptionFlag === undefined) {
+		try {
+			// Rather than try to match the Babel version, we just see if it throws
+			// when passed a 'caller' flag, and use that to decide if it is supported.
+			babel.loadPartialConfig({
+				caller: undefined,
+				babelrc: false,
+				configFile: false
+			});
+			supportsCallerOptionFlag = true;
+		} catch (error) {
+			supportsCallerOptionFlag = false;
+		}
+	}
+
+	return supportsCallerOptionFlag;
+}
