@@ -94,7 +94,7 @@ function supportsCallerOption() {
 				configFile: false
 			});
 			supportsCallerOptionFlag = true;
-		} catch (error) {
+		} catch (_) {
 			supportsCallerOptionFlag = false;
 		}
 	}
