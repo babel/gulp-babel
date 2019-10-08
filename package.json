@@ -52,10 +52,10 @@
     "@babel/plugin-transform-block-scoping": "^7.0.0",
     "@babel/plugin-transform-classes": "^7.0.0",
     "gulp-sourcemaps": "^2.6.4",
-    "mocha": "^5.0.0",
+    "mocha": "^6.2.1",
     "pre-commit": "^1.2.2",
     "vinyl": "^2.1.0",
-    "xo": "^0.24.0"
+    "xo": "^0.25.3"
   },
   "xo": {
     "envs": [
