@@ -28,24 +28,37 @@ module.exports = function (opts) {
 			cb(new PluginError('gulp-babel', '@babel/core@^7.0.0 is required'));
 			return;
 		}
-
-		const fileOpts = Object.assign({}, opts, {
+    
+    
+    const isInputSourceMapPresent = Boolean(file.sourceMap);
+		const defaultOpts = {
 			filename: file.path,
 			filenameRelative: file.relative,
-			sourceMap: Boolean(file.sourceMap),
-			sourceFileName: file.relative,
-			caller: Object.assign(
+      caller: Object.assign(
 				{name: 'babel-gulp'},
 				opts.caller
 			)
-		});
+		};
+
+		if (isInputSourceMapPresent) {
+			defaultOpts.inputSourceMap = file.sourceMap;
+		}
+		else {
+			defaultOpts.sourceFileName = file.relative;
+		}
+
+		const fileOpts = objectAssign({}, opts, defaultOpts);
 
 		babel.transformAsync(file.contents.toString(), fileOpts).then(res => {
 			if (res) {
-				if (file.sourceMap && res.map) {
-					res.map.file = replaceExtension(file.relative);
-					applySourceMap(file, res.map);
-				}
+        if (file.sourceMap && res.map) {
+				  if (isInputSourceMapPresent) {
+					  file.sourceMap = res.map;
+				  } else {
+					  res.map.file = replaceExtension(file.relative);
+					  applySourceMap(file, res.map);
+				  }
+			  }
 
 				file.contents = Buffer.from(res.code);
 				file.path = replaceExtension(file.path);
