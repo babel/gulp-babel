@@ -38,6 +38,7 @@
     "compiler"
   ],
   "dependencies": {
+    "piscina": "^3.0.0",
     "plugin-error": "^1.0.1",
     "replace-ext": "^1.0.0",
     "through2": "^3.0.0",

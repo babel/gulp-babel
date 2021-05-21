@@ -5,6 +5,12 @@ const through = require('through2');
 const applySourceMap = require('vinyl-sourcemaps-apply');
 const replaceExt = require('replace-ext');
 const babel = require('@babel/core');
+const { Piscina } = require("piscina");
+
+const piscina = new Piscina({
+	filename: path.join(__dirname, "worker.js"),
+	concurrentTasksPerWorker: 2
+});
 
 function replaceExtension(fp) {
 	return path.extname(fp) ? replaceExt(fp, '.js') : fp;
@@ -40,7 +46,10 @@ module.exports = function (opts) {
 			)
 		});
 
-		babel.transformAsync(file.contents.toString(), fileOpts).then(res => {
+		piscina.runTask({
+			code: file.contents.toString(),
+			options: fileOpts
+		}).then(res => {
 			if (res) {
 				if (file.sourceMap && res.map) {
 					res.map.file = replaceExtension(file.relative);
