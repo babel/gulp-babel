@@ -66,6 +66,26 @@ gulp.task('default', () =>
 );
 ```
 
+Example with option for switch off source map applying. (pass false as 2nd parameter after babel options)
+
+```js
+const gulp = require('gulp');
+const sourcemaps = require('gulp-sourcemaps');
+const babel = require('gulp-babel');
+const concat = require('gulp-concat');
+
+gulp.task('default', () =>
+	gulp.src('src/**/*.js')
+		.pipe(sourcemaps.init())
+		.pipe(babel({
+			presets: ['@babel/preset-env']
+		}, false))
+		.pipe(concat('all.js'))
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest('dist'))
+);
+```
+
 
 ## Babel Metadata
 
