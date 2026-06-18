@@ -12,7 +12,7 @@
     "node": ">=6"
   },
   "scripts": {
-    "test": "xo && mocha"
+    "test": "mocha"
   },
   "pre-commit": {
     "run": [
@@ -44,7 +44,7 @@
     "vinyl-sourcemaps-apply": "^0.2.0"
   },
   "peerDependencies": {
-    "@babel/core": "^7.0.0"
+    "@babel/core": "^7.0.0 || ^8.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -54,13 +54,6 @@
     "gulp-sourcemaps": "^2.6.4",
     "mocha": "^6.2.1",
     "pre-commit": "^1.2.2",
-    "vinyl": "^2.1.0",
-    "xo": "^0.25.3"
-  },
-  "xo": {
-    "envs": [
-      "node",
-      "mocha"
-    ]
+    "vinyl": "^2.1.0"
   }
 }

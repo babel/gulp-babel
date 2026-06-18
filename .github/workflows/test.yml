@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test:
+    name: Node.js ${{ matrix.node }} / Babel ${{ matrix.babel }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [8, 22, 24, 26]
+        babel: [7, 8]
+        exclude:
+          # Babel 8 requires Node.js 20+, so it cannot run on Node.js 8.
+          - node: 8
+            babel: 8
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install dependencies (Babel 7)
+        run: yarn install --frozen-lockfile
+
+      - name: Upgrade dev dependencies to Babel 8
+        if: matrix.babel == 8
+        run: >-
+          yarn add --dev
+          @babel/core@^8.0.0
+          @babel/plugin-transform-arrow-functions@^8.0.0
+          @babel/plugin-transform-block-scoping@^8.0.0
+          @babel/plugin-transform-classes@^8.0.0
+
+      - name: Run tests
+        run: yarn test

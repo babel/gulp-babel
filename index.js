@@ -25,7 +25,7 @@ module.exports = function (opts) {
 		}
 
 		if (!supportsCallerOption()) {
-			cb(new PluginError('gulp-babel', '@babel/core@^7.0.0 is required'));
+			cb(new PluginError('gulp-babel', '@babel/core@>=7.0.0 is required'));
 			return;
 		}
 
@@ -75,7 +75,7 @@ function supportsCallerOption() {
 		try {
 			// Rather than try to match the Babel version, we just see if it throws
 			// when passed a 'caller' flag, and use that to decide if it is supported.
-			babel.loadPartialConfig({
+			(babel.loadPartialConfigSync || babel.loadPartialConfig)({
 				caller: undefined,
 				babelrc: false,
 				configFile: false
