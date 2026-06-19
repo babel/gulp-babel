@@ -10,7 +10,7 @@ function replaceExtension(fp) {
 	return path.extname(fp) ? replaceExt(fp, '.js') : fp;
 }
 
-module.exports = function (opts) {
+module.exports = function (opts, applySourceMaps = true) {
 	opts = opts || {};
 
 	return through.obj(function (file, enc, cb) {
@@ -44,7 +44,11 @@ module.exports = function (opts) {
 			if (res) {
 				if (file.sourceMap && res.map) {
 					res.map.file = replaceExtension(file.relative);
-					applySourceMap(file, res.map);
+					if (applySourceMaps) {
+						applySourceMap(file, res.map);
+					} else {
+						file.sourceMap = res.map;
+					}
 				}
 
 				file.contents = Buffer.from(res.code);
