@@ -59,9 +59,10 @@ module.exports = function (opts) {
 				fileName: file.path,
 				showProperties: false
 			}));
+			return Promise.reject(error);
 		}).then(
 			() => cb(),
-			() => cb()
+			(e) => cb(e)
 		);
 	});
 };
