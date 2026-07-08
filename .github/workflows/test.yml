@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
 
 jobs:
@@ -13,31 +13,36 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [8, 22, 24, 26]
+        node: [10, 22, 24, 26]
         babel: [7, 8]
         exclude:
-          # Babel 8 requires Node.js 20+, so it cannot run on Node.js 8.
-          - node: 8
+          # Babel 8 requires Node.js 20+, so it cannot run on Node.js 10.
+          - node: 10
             babel: 8
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Set up Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}
 
       - name: Install dependencies (Babel 7)
         run: yarn install --frozen-lockfile
 
-      - name: Upgrade dev dependencies to Babel 8
-        if: matrix.babel == 8
+      - name: Downgrade dev dependencies to Babel 7
+        if: matrix.babel == 7
         run: >-
           yarn add --dev
-          @babel/core@^8.0.0
-          @babel/plugin-transform-arrow-functions@^8.0.0
-          @babel/plugin-transform-block-scoping@^8.0.0
-          @babel/plugin-transform-classes@^8.0.0
+          @babel/core@^7.0.0
+          @babel/plugin-transform-arrow-functions@^7.0.0
+          @babel/plugin-transform-block-scoping@^7.0.0
+          @babel/plugin-transform-classes@^7.0.0
 
       - name: Run tests
+        if: matrix.node != 10
         run: yarn test
+
+      - name: Run tests (Node.js 10)
+        if: matrix.node == 10
+        run: yarn add --dev mocha@^6.2.1 && yarn mocha
