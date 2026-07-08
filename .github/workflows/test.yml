@@ -22,13 +22,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Set up Node.js ${{ matrix.node }}
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}
-
-      - name: Install dependencies (Babel 7)
-        run: yarn install --frozen-lockfile
 
       - name: Downgrade dev dependencies to Babel 7
         if: matrix.babel == 7
