@@ -20,11 +20,10 @@ jobs:
           - node: 10
             babel: 8
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-
       - name: Set up Node.js ${{ matrix.node }}
         uses: actions/setup-node@v6
         with:
@@ -32,8 +31,9 @@ jobs:
 
       - name: Downgrade dev dependencies to Babel 7
         if: matrix.babel == 7
+        # Remove --ignore-engines once https://github.com/chicoxyzzy/node-releases/pull/44 is resolved
         run: >-
-          yarn add --dev
+          yarn add --dev --ignore-engines
           @babel/core@^7.0.0
           @babel/plugin-transform-arrow-functions@^7.0.0
           @babel/plugin-transform-block-scoping@^7.0.0
@@ -45,4 +45,4 @@ jobs:
 
       - name: Run tests (Node.js 10)
         if: matrix.node == 10
-        run: yarn add --dev mocha@^6.2.1 && yarn mocha
+        run: yarn add --dev --ignore-engines mocha@^6.2.1 && yarn mocha
