@@ -9,10 +9,10 @@
     "Charles Samborski <demurgos@demurgos.net> (demurgos.net)"
   ],
   "engines": {
-    "node": ">=6"
+    "node": ">=10.13.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "node --test"
   },
   "pre-commit": {
     "run": [
@@ -38,8 +38,8 @@
     "compiler"
   ],
   "dependencies": {
-    "plugin-error": "^1.0.1",
-    "replace-ext": "^1.0.0",
+    "plugin-error": "^2.0.1",
+    "replace-ext": "^2.0.0",
     "through2": "^3.0.0",
     "vinyl-sourcemaps-apply": "^0.2.0"
   },
@@ -47,13 +47,12 @@
     "@babel/core": "^7.0.0 || ^8.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-transform-arrow-functions": "^7.0.0",
-    "@babel/plugin-transform-block-scoping": "^7.0.0",
-    "@babel/plugin-transform-classes": "^7.0.0",
+    "@babel/core": "^8.0.0",
+    "@babel/plugin-transform-arrow-functions": "^8.0.0",
+    "@babel/plugin-transform-block-scoping": "^8.0.0",
+    "@babel/plugin-transform-classes": "^8.0.0",
     "gulp-sourcemaps": "^2.6.4",
-    "mocha": "^6.2.1",
     "pre-commit": "^1.2.2",
-    "vinyl": "^2.1.0"
+    "vinyl": "^3.0.1"
   }
 }

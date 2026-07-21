@@ -4,8 +4,11 @@ const assert = require('assert');
 const Vinyl = require('vinyl');
 const sourceMaps = require('gulp-sourcemaps');
 const babel = require('.');
+const useMocha = +(process.version.split('.')[0].slice(1)) < 18;
+const { it } = useMocha ? require('mocha') : require('node:test');
 
-it('should transpile with Babel', cb => {
+it('should transpile with Babel', (t, cb) => {
+	if (useMocha) cb = t;
 	const stream = babel({
 		plugins: ['@babel/transform-block-scoping']
 	});
@@ -27,7 +30,8 @@ it('should transpile with Babel', cb => {
 	stream.end();
 });
 
-it('should generate source maps', cb => {
+it('should generate source maps', (t, cb) => {
+	if (useMocha) cb = t;
 	const init = sourceMaps.init();
 	const write = sourceMaps.write();
 	init
@@ -56,7 +60,8 @@ it('should generate source maps', cb => {
 	init.end();
 });
 
-it('should generate source maps for file in nested folder', cb => {
+it('should generate source maps for file in nested folder', (t, cb) => {
+	if (useMocha) cb = t;
 	const init = sourceMaps.init();
 	const write = sourceMaps.write();
 	init
@@ -85,7 +90,8 @@ it('should generate source maps for file in nested folder', cb => {
 	init.end();
 });
 
-it('should pass the result of transform().metadata in file.babel', cb => {
+it('should pass the result of transform().metadata in file.babel', (t, cb) => {
+	if (useMocha) cb = t;
 	const stream = babel({
 		plugins: [{
 			post(file) {
@@ -110,7 +116,8 @@ it('should pass the result of transform().metadata in file.babel', cb => {
 	stream.end();
 });
 
-it('should not rename ignored files', cb => {
+it('should not rename ignored files', (t, cb) => {
+	if (useMocha) cb = t;
 	const stream = babel({
 		ignore: [/fixture/]
 	});
@@ -132,7 +139,8 @@ it('should not rename ignored files', cb => {
 		.end(new Vinyl(inputFile));
 });
 
-it('should not rename files without an extension', cb => {
+it('should not rename files without an extension', (t, cb) => {
+	if (useMocha) cb = t;
 	const stream = babel();
 
 	const inputFile = {
